@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/chatsFragment">
+
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="de.rs.globetrotterchat.android.ui.ChatsFragment"
+        android:label="fragment_chats"
+        tools:layout="@layout/fragment_chats" />
+    <fragment
+        android:id="@+id/chatConversationFragment"
+        android:name="de.rs.globetrotterchat.android.ui.ChatConversationFragment"
+        android:label="fragment_chat_conversation"
+        tools:layout="@layout/fragment_chat_conversation" />
+    <fragment
+        android:id="@+id/friendsHubFragment"
+        android:name="de.rs.globetrotterchat.android.ui.FriendsHubFragment"
+        android:label="fragment_friends_hub"
+        tools:layout="@layout/fragment_friends_hub" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="de.rs.globetrotterchat.android.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+</navigation>
