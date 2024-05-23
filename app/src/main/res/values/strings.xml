@@ -10,4 +10,7 @@
     <string name="visibility">Visibility</string>
     <string name="type_here">type here…</string>
     <string name="send">Send</string>
+    <string name="friendname">friendName</string>
+    <string name="hello">HELLO</string>
+    <string name="loggedinusername">LoggedInUserName</string>
 </resources>
