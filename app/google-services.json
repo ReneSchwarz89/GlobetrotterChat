@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092129427237",
+    "project_id": "rising-city-422714-s0",
+    "storage_bucket": "rising-city-422714-s0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092129427237:android:9186ecc9b67804247394cc",
+        "android_client_info": {
+          "package_name": "de.rs.globetrotterchat.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKH0e8_wBrWr3HNpFsb9on2cpnhQl8fB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
