@@ -13,4 +13,5 @@
     <string name="friendname">friendName</string>
     <string name="hello">HELLO</string>
     <string name="loggedinusername">LoggedInUserName</string>
+    <string name="add_friends">add Friends</string>
 </resources>
