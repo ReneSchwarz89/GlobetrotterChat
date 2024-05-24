@@ -27,12 +27,12 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/loginRegistryFragment"
-        android:name="de.rs.globetrotterchat.android.ui.loginRegistry.LoginRegistryFragment"
+        android:name="de.rs.globetrotterchat.android.ui.loginRegistry.LoginSignUpFragment"
         android:label="fragment_login_registry"
-        tools:layout="@layout/fragment_login_registry" />
+        tools:layout="@layout/fragment_login_signup" />
     <fragment
         android:id="@+id/registryDetailsFragment"
-        android:name="de.rs.globetrotterchat.android.RegistryDetailsFragment"
+        android:name="de.rs.globetrotterchat.android.ui.loginRegistry.RegistryDetailsFragment"
         android:label="fragment_registry_details"
         tools:layout="@layout/fragment_registry_details" />
 </navigation>
