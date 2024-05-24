@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_chat_conversation" />
     <fragment
         android:id="@+id/friendsHubFragment"
-        android:name="de.rs.globetrotterchat.android.ui.FriendsHubFragment"
+        android:name="de.rs.globetrotterchat.android.ui.friendsHub.FriendsHubFragment"
         android:label="fragment_friends_hub"
         tools:layout="@layout/fragment_friends_hub" />
     <fragment

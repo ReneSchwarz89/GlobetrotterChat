@@ -1,4 +1,4 @@
-package de.rs.globetrotterchat.android.ui
+package de.rs.globetrotterchat.android.ui.friendsHub
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
