@@ -3,36 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chatsFragment">
+    app:startDestination="@id/loginSignUpFragment">
 
     <fragment
-        android:id="@+id/chatsFragment"
-        android:name="de.rs.globetrotterchat.android.ui.ChatsFragment"
-        android:label="fragment_chats"
-        tools:layout="@layout/fragment_chats" />
-    <fragment
-        android:id="@+id/chatConversationFragment"
-        android:name="de.rs.globetrotterchat.android.ui.ChatConversationFragment"
-        android:label="fragment_chat_conversation"
-        tools:layout="@layout/fragment_chat_conversation" />
-    <fragment
-        android:id="@+id/friendsHubFragment"
-        android:name="de.rs.globetrotterchat.android.ui.friendsHub.FriendsHubFragment"
-        android:label="fragment_friends_hub"
-        tools:layout="@layout/fragment_friends_hub" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="de.rs.globetrotterchat.android.ui.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/loginRegistryFragment"
-        android:name="de.rs.globetrotterchat.android.ui.loginRegistry.LoginSignUpFragment"
-        android:label="fragment_login_registry"
+        android:id="@+id/loginSignUpFragment"
+        android:name="de.rs.globetrotterchat.android.ui.loginSignUp.LoginSignUpFragment"
+        android:label="fragment_login_signup"
         tools:layout="@layout/fragment_login_signup" />
     <fragment
-        android:id="@+id/registryDetailsFragment"
-        android:name="de.rs.globetrotterchat.android.ui.loginRegistry.RegistryDetailsFragment"
-        android:label="fragment_registry_details"
-        tools:layout="@layout/fragment_registry_details" />
+        android:id="@+id/signUpDetailsFragment"
+        android:name="de.rs.globetrotterchat.android.ui.loginSignUp.SignUpDetailsFragment"
+        android:label="fragment_signup_details"
+        tools:layout="@layout/fragment_signup_details" />
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="de.rs.globetrotterchat.android.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main">
+        <argument
+            android:name="startDestination"
+            app:argType="string"
+            android:defaultValue="chatsFragment" />
+
+        <fragment
+            android:id="@+id/chatsFragment"
+            android:name="de.rs.globetrotterchat.android.ui.Chat.ChatsFragment"
+            android:label="fragment_chats"
+            tools:layout="@layout/fragment_chats" />
+        <fragment
+            android:id="@+id/friendsHubFragment2"
+            android:name="de.rs.globetrotterchat.android.ui.friendsHub.FriendsHubFragment"
+            android:label="fragment_friends_hub"
+            tools:layout="@layout/fragment_friends_hub" />
+        <fragment
+            android:id="@+id/chatConversationFragment"
+            android:name="de.rs.globetrotterchat.android.ui.Chat.ChatConversationFragment"
+            android:label="ChatConversationFragment" />
+    </activity>
 </navigation>
