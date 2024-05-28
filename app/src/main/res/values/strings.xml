@@ -14,4 +14,12 @@
     <string name="hello">HELLO</string>
     <string name="loggedinusername">LoggedInUserName</string>
     <string name="add_friends">add Friends</string>
+
+    //String-Array for Spinner in signup Native Language
+    <string-array name="native_language_options">
+        <item>Deutsch</item>
+        <item>English</item>
+        <item>Spain</item>
+        <item>Français</item>
+    </string-array>
 </resources>
