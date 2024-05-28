@@ -5,6 +5,6 @@ data class Contact(
     val username: String,
     val profilePictureUrl: String? = null,
     val nativeLanguage: String,
-    val conversationIds: MutableList<String> = mutableListOf()
+    val conversation: MutableList<Conversation> = mutableListOf()
 
 )
