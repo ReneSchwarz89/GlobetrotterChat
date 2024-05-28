@@ -1,6 +1,5 @@
 package de.rs.globetrotterchat.android.data.model
 
-import de.rs.globetrotterchat.android.ui.friendsHub.ContactsManager
 
 data class User(
     val id: String,

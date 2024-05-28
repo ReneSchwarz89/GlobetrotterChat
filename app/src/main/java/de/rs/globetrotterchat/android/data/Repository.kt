@@ -1,6 +1,5 @@
 package de.rs.globetrotterchat.android.data
 
-import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.remote.FirebaseService
 
 class Repository(private val firebaseService: FirebaseService) {
