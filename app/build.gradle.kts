@@ -1,10 +1,10 @@
 import com.android.build.gradle.internal.cxx.logging.lifecycleln
+import com.android.utils.TraceUtils.simpleId
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
-
 
 }
 
@@ -55,6 +55,16 @@ dependencies {
     implementation(libs.material.v1120)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Nav-graph
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Coroutines
+
+
+    // Retrofit and Moshi
+
 
     //Firebase
     implementation(platform(libs.firebase.bom))
