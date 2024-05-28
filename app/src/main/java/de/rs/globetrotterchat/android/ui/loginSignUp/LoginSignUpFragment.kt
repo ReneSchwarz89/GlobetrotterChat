@@ -1,16 +1,14 @@
-package de.rs.globetrotterchat.android.ui.loginRegistry
+package de.rs.globetrotterchat.android.ui.loginSignUp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 import de.rs.globetrotterchat.android.R
 
 
-class LoginRegistryFragment : Fragment() {
+class LoginSignUpFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -18,7 +16,7 @@ class LoginRegistryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_registry, container, false)
+        return inflater.inflate(R.layout.fragment_login_signup, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
