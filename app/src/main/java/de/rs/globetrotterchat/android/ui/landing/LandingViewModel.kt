@@ -5,13 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import de.rs.globetrotterchat.android.data.Repository
 import de.rs.globetrotterchat.android.data.remote.FirebaseService
 import kotlinx.coroutines.launch
 
 class LandingViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository = Repository(FirebaseService())
+    private val authService = FirebaseService()
 
     private val _sessionState = MutableLiveData<SessionState>()
     val sessionState: LiveData<SessionState> get() = _sessionState
@@ -28,7 +27,7 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
     }
 
     private fun checkIfUserIsLoggedIn() {
-        if (repository.isLoggedIn){
+        if (authService.isLoggedIn){
             _sessionState.value = SessionState.LOGGED_IN
         } else {
             _sessionState.value = SessionState.NEUTRAL
@@ -37,14 +36,14 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
 
     fun signUp() {
         viewModelScope.launch {
-            val isSuccess = repository.createUser(email, password)
+            val isSuccess = authService.createUserWithEmailAndPassword(email, password)
             _sessionState.value = if (isSuccess) SessionState.SIGNED_UP else SessionState.SIGNUP_FAILED
         }
     }
 
     fun signIn() {
         viewModelScope.launch {
-            val isSuccess = repository.signInUser(email, password)
+            val isSuccess = authService.signInWithEmailAndPassword(email, password)
             _sessionState.value = if (isSuccess) SessionState.LOGGED_IN else SessionState.LOGIN_FAILED
         }
     }
