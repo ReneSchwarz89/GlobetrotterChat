@@ -20,31 +20,40 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
     private var nickname = ""
     private var nativeLanguage = ""
 
-    enum class SessionState { NEUTRAL, LOGGED_IN, SIGNED_UP, LOGIN_FAILED, SIGNUP_FAILED }
+    sealed interface SessionState {
+        sealed class LoggedInOrSignedUp (val uid: String) : SessionState
+        data class LoggedIn(val userId: String) : LoggedInOrSignedUp(userId)
+        data class SignedUp(val userId: String) : LoggedInOrSignedUp(userId)
+        data object Neutral : SessionState
+        data object LoginFailed : SessionState
+        data object SignupFailed : SessionState
+    }
 
     init {
         checkIfUserIsLoggedIn()
     }
 
     private fun checkIfUserIsLoggedIn() {
-        if (authService.isLoggedIn){
-            _sessionState.value = SessionState.LOGGED_IN
-        } else {
-            _sessionState.value = SessionState.NEUTRAL
-        }
+        _sessionState.value = authService.userId
+            ?.let { uid -> SessionState.LoggedIn(uid) }
+            ?: SessionState.Neutral
     }
 
     fun signUp() {
         viewModelScope.launch {
-            val isSuccess = authService.createUserWithEmailAndPassword(email, password)
-            _sessionState.value = if (isSuccess) SessionState.SIGNED_UP else SessionState.SIGNUP_FAILED
+            authService.createUserWithEmailAndPassword(email, password)
+            _sessionState.value = authService.userId
+                ?.let { uid -> SessionState.SignedUp(uid) }
+                ?: SessionState.SignupFailed
         }
     }
 
     fun signIn() {
         viewModelScope.launch {
-            val isSuccess = authService.signInWithEmailAndPassword(email, password)
-            _sessionState.value = if (isSuccess) SessionState.LOGGED_IN else SessionState.LOGIN_FAILED
+            authService.signInWithEmailAndPassword(email, password)
+            _sessionState.value = authService.userId
+                ?.let { uid -> SessionState.LoggedIn(uid) }
+                ?: SessionState.LoginFailed
         }
     }
 

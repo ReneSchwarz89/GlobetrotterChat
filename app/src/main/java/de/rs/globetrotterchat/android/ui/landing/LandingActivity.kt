@@ -22,27 +22,27 @@ class LandingActivity : AppCompatActivity() {
         viewModel.sessionState.observe(this){ sessionState ->
             showDebugMessage(sessionState)
             when (sessionState){
-                LandingViewModel.SessionState.LOGGED_IN,
-                LandingViewModel.SessionState.SIGNED_UP -> {
-                    proceedToMainApp()
+                is LandingViewModel.SessionState.LoggedInOrSignedUp -> {
+                    proceedToMainApp(sessionState.uid)
                 }
                 else -> {}
             }
         }
     }
 
-    private fun proceedToMainApp(){
+    private fun proceedToMainApp(uid: String){
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("uid", uid)
         startActivity(intent)
     }
 
     private fun showDebugMessage(state: LandingViewModel.SessionState) {
         val message = when (state) {
-            LandingViewModel.SessionState.NEUTRAL -> "Welcome"
-            LandingViewModel.SessionState.LOGGED_IN -> "You successfully logged in!"
-            LandingViewModel.SessionState.SIGNED_UP -> "You successfully registered!"
-            LandingViewModel.SessionState.LOGIN_FAILED -> "Login failed!"
-            LandingViewModel.SessionState.SIGNUP_FAILED -> "SignUp Failed"
+            is LandingViewModel.SessionState.Neutral -> "Welcome"
+            is LandingViewModel.SessionState.LoggedIn -> "You successfully logged in!"
+            is LandingViewModel.SessionState.SignedUp -> "You successfully registered!"
+            is LandingViewModel.SessionState.LoginFailed -> "Login failed!"
+            is LandingViewModel.SessionState.SignupFailed -> "SignUp Failed"
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
