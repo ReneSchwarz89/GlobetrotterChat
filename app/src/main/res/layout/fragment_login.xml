@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.loginSignUp.LoginSignUpFragment">
+    tools:context=".ui.landing.loginSignUp.LoginFragment">
 
 
     <ImageView
@@ -121,9 +121,10 @@
                 android:id="@+id/btn_signUp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_marginBottom="4dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center|top"
+                android:gravity="center"
                 android:paddingTop="4dp"
                 android:text="SignUp"
                 android:textColor="@color/arcticBlue"

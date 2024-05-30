@@ -1,4 +1,4 @@
-package de.rs.globetrotterchat.android.ui.friendsHub
+package de.rs.globetrotterchat.android.ui.main.friendsHub
 
 import de.rs.globetrotterchat.android.data.model.Contact
 

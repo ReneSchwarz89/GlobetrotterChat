@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.loginSignUp.SignUpDetailsFragment">
+    tools:context=".ui.landing.loginSignUp.SignUpFragment">
 
     <ImageView
         android:layout_width="0dp"
@@ -52,22 +52,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- EditText für den Benutzernamen -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:hintEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Username"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
+            <!-- TextInputLayout für die E-Mail-Adresse -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,6 +71,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -96,12 +82,24 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNickName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nickname"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spNativeLanguage"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp" />
 
             <Button
@@ -110,6 +108,16 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/arcticBlue"
                 android:text="SignUp" />
+
+            <TextView
+                android:id="@+id/btnBackToLogin"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="All ready Signed Up?"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

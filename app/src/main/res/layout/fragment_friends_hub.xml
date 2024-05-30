@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.friendsHub.FriendsHubFragment">
+    tools:context=".ui.main.friendsHub.FriendsHubFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -71,14 +71,14 @@
                     android:layout_marginStart="8dp"
                     android:text="add new friends"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnAddFriends"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddFriends"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imageView" />
+                    app:layout_constraintTop_toTopOf="@+id/btnAddFriends" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/btnAddFriends"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:clickable="true"

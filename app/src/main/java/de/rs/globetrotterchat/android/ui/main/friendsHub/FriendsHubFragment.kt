@@ -1,4 +1,4 @@
-package de.rs.globetrotterchat.android.ui.Chat
+package de.rs.globetrotterchat.android.ui.main.friendsHub
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import de.rs.globetrotterchat.android.R
 
-class ChatConversationFragment : Fragment() {
+class FriendsHubFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,6 +18,6 @@ class ChatConversationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_conversation, container, false)
+        return inflater.inflate(R.layout.fragment_friends_hub, container, false)
     }
 }

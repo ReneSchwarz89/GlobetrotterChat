@@ -1,4 +1,4 @@
-package de.rs.globetrotterchat.android
+package de.rs.globetrotterchat.android.ui.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
