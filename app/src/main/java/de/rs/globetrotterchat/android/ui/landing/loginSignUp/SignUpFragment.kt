@@ -29,5 +29,9 @@ class SignUpFragment : Fragment() {
             viewModel.setNativeLanguage(binding.spNativeLanguage.toString())
             viewModel.signUp()
         }
+
+        binding.btnBackToLogin.setOnClickListener {
+
+        }
     }
 }
