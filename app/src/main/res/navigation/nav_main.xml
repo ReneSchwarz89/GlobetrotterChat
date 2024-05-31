@@ -4,9 +4,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/chatsFragment">
 
-
-
-
             <fragment
                 android:id="@+id/chatsFragment"
                 android:name="de.rs.globetrotterchat.android.ui.main.Chat.ChatsFragment"
@@ -29,7 +26,8 @@
             <fragment
                 android:id="@+id/chatConversationFragment"
                 android:name="de.rs.globetrotterchat.android.ui.main.Chat.ChatConversationFragment"
-                android:label="ChatConversationFragment">
+                android:label="ChatConversationFragment"
+                tools:layout="@layout/fragment_chat_conversation">
                 <action
                     android:id="@+id/toChatsFragment"
                     app:destination="@id/chatsFragment" />

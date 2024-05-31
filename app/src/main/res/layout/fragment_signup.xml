@@ -2,14 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.landing.loginSignUp.SignUpFragment">
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:foregroundGravity="center"
         android:scaleType="centerCrop"
         android:src="@drawable/loginbackground"
@@ -37,20 +36,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
         app:cardCornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_profile"
-        app:layout_constraintVertical_bias="0.26">
+        app:layout_constraintTop_toBottomOf="@+id/iv_profile">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:orientation="vertical">
 
             <!-- TextInputLayout für die E-Mail-Adresse -->
             <com.google.android.material.textfield.TextInputLayout
@@ -113,11 +111,11 @@
                 android:id="@+id/btnBackToLogin"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:text="All ready Signed Up?"
-                android:textAlignment="center"
-                android:gravity="center"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:gravity="center"
+                android:text="All ready Signed Up?"
+                android:textAlignment="center" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
