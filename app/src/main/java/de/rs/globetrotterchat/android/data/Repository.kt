@@ -2,6 +2,7 @@ package de.rs.globetrotterchat.android.data
 
 import android.util.Log
 import de.rs.globetrotterchat.android.data.model.Profile
+import de.rs.globetrotterchat.android.data.remote.FirebaseService
 import de.rs.globetrotterchat.android.data.remote.FirestoreService
 
 class Repository(private val firestoreService: FirestoreService){
@@ -13,4 +14,5 @@ class Repository(private val firestoreService: FirestoreService){
             Log.e(Repository::class.simpleName,"Could not set profile $profile: $e")
         }
     }
+
 }

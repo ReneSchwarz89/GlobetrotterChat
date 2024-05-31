@@ -8,14 +8,12 @@
         android:icon="@drawable/baseline_chat"
         android:title="Chats" />
 
-
     <item
         android:id="@+id/friendsHubFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:icon="@drawable/baseline_groups"
         android:title="FriendsHub" />
-
 
     <item
         android:id="@+id/settingsFragment"

@@ -31,8 +31,9 @@ class LandingActivity : AppCompatActivity() {
     }
 
     private fun proceedToMainApp(uid: String){
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("uid", uid)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("uid", uid)
+        }
         startActivity(intent)
     }
 

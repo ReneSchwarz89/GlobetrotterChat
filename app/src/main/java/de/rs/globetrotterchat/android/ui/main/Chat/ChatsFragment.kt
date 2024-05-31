@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import de.rs.globetrotterchat.android.R
+import de.rs.globetrotterchat.android.databinding.ActivityMainBinding
+import de.rs.globetrotterchat.android.databinding.FragmentChatsBinding
 import de.rs.globetrotterchat.android.ui.main.MainViewModel
 
 class ChatsFragment : Fragment() {
 
     private val viewModel : MainViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var binding : FragmentChatsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_chats, container, false)
+        binding = FragmentChatsBinding.inflate(inflater,null,false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
