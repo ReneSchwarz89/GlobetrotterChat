@@ -2,9 +2,7 @@ package de.rs.globetrotterchat.android.data.model
 
 data class Contact(
     val id: String,
-    val username: String,
+    val nickname: String,
     val profilePictureUrl: String? = null,
-    val nativeLanguage: String,
-    val conversation: MutableList<Conversation> = mutableListOf()
-
+    val conversationId: String
 )

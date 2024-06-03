@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_profile"
+                android:id="@+id/ivProfile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="-1dp"
@@ -43,7 +43,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                app:layout_constraintStart_toEndOf="@+id/ivProfile"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

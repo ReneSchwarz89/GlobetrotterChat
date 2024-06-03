@@ -20,7 +20,7 @@
         app:layout_constraintBottom_toTopOf="@id/v_divider">
 
         <ImageView
-            android:id="@+id/iv_profile"
+            android:id="@+id/ivProfile"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/profile_image_mask48x48"

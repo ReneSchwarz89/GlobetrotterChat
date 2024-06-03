@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import de.rs.globetrotterchat.android.data.remote.FirebaseService
 import de.rs.globetrotterchat.android.databinding.ActivityMainBinding
 import de.rs.globetrotterchat.android.databinding.FragmentSettingsBinding
 
@@ -13,6 +14,7 @@ class SettingsFragment : Fragment() {
 
     private val viewModel : MainViewModel by activityViewModels()
     private lateinit var binding: FragmentSettingsBinding
+    private lateinit var authService: FirebaseService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater,null,false)
@@ -21,6 +23,8 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        authService = FirebaseService()
 
         binding.btnLogout.setOnClickListener {
             viewModel.logout()

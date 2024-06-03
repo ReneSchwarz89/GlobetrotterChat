@@ -5,19 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import de.rs.globetrotterchat.android.R
+import de.rs.globetrotterchat.android.adapter.FriendsHubAdapter
+import de.rs.globetrotterchat.android.databinding.FragmentFriendsHubBinding
+import de.rs.globetrotterchat.android.ui.main.MainViewModel
 
 class FriendsHubFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var binding: FragmentFriendsHubBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentFriendsHubBinding.inflate(inflater)
+        return binding.root
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends_hub, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getProfiles()
+
+        viewModel.profiles.observe(viewLifecycleOwner){ profiles ->
+            binding.rvFriendsHub.adapter = FriendsHubAdapter(profiles)
+        }
     }
 }

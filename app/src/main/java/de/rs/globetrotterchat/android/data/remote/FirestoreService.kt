@@ -13,5 +13,15 @@ class FirestoreService(private val uid: String) {
         database.collection("Profile").document(uid).set(profile).await()
     }
 
+    suspend fun getAllProfiles(): List<Profile>{
+        val result = database.collection("Profile").get().await()
+        return result.toObjects(Profile::class.java)
+    }
+
+    suspend fun getProfile(uid: String): Profile? {
+        val result = database.collection("Profile").document(uid).get().await()
+        return result.toObject(Profile::class.java)
+    }
+
 
 }

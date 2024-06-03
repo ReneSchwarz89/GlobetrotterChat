@@ -31,7 +31,7 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
     }
 
     init {
-
+        checkUserLoginStatus()
     }
 
 
@@ -59,11 +59,6 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
                 ?.let { uid -> SessionState.LoggedIn(uid) }
                 ?: SessionState.LoginFailed
         }
-    }
-
-    private fun onUserLoggedOut() {
-        authService.signOut()
-        _sessionState.value = SessionState.Neutral
     }
 
     fun setEmail(email: String){

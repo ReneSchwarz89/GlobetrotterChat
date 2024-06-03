@@ -1,6 +1,7 @@
 package de.rs.globetrotterchat.android.ui.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,41 +12,41 @@ import de.rs.globetrotterchat.android.data.remote.FirebaseService
 import de.rs.globetrotterchat.android.data.remote.FirestoreService
 import kotlinx.coroutines.launch
 
+const val TAG = "MainViewModel"
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
     private lateinit var authService: FirebaseService
-
-    private val _uid = MutableLiveData<String?>()
-    val uid: LiveData<String?> get() = _uid
 
     private val repository: Repository by lazy {
         Repository(FirestoreService(uid.toString()))
     }
 
-    init {
+    private val _uid = MutableLiveData<String?>()
+    val uid: LiveData<String?> get() = _uid
 
-    }
-
-
+    val profiles = repository.profiles
 
     fun setUid(uid:String){
         _uid.value = uid
     }
 
-    private fun clearUid(){
-        _uid.value = null
-    }
 
     fun logout(){
         viewModelScope.launch {
             authService.signOut()
-            clearUid()
+        }
+    }
+
+    fun getProfiles() {
+        viewModelScope.launch {
+            repository.getAllProfiles()
+            Log.e(TAG,"${profiles.value?.size}")
         }
     }
 
     fun setProfile(){
         viewModelScope.launch {
-            val profile = Profile("irgendwas","","")
+            val profile = Profile("","","")
             repository.setProfile(profile)
         }
     }
