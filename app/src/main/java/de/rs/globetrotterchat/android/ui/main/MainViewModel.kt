@@ -6,47 +6,32 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.Repository
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.data.remote.FirebaseService
 import de.rs.globetrotterchat.android.data.remote.FirestoreService
 import kotlinx.coroutines.launch
 
-const val TAG = "MainViewModel"
-class MainViewModel(application: Application): AndroidViewModel(application) {
 
-    private lateinit var authService: FirebaseService
+class MainViewModel(
+    application: Application,
+    private val repository: Repository
+) : AndroidViewModel(application) {
 
-    private val repository: Repository by lazy {
-        Repository(FirestoreService(uid.toString()))
-    }
-
-    private val _uid = MutableLiveData<String?>()
-    val uid: LiveData<String?> get() = _uid
 
     val profiles = repository.profiles
-
-    fun setUid(uid:String){
-        _uid.value = uid
-    }
-
-
-    fun logout(){
-        viewModelScope.launch {
-            authService.signOut()
-        }
-    }
 
     fun getProfiles() {
         viewModelScope.launch {
             repository.getAllProfiles()
-            Log.e(TAG,"${profiles.value?.size}")
         }
     }
 
     fun setProfile(){
         viewModelScope.launch {
-            val profile = Profile("","","")
+            val profile = Profile("","Zeus","")
             repository.setProfile(profile)
         }
     }

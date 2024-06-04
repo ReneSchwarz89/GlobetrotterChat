@@ -2,9 +2,13 @@ package de.rs.globetrotterchat.android.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
+import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelLazy
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -15,7 +19,6 @@ import de.rs.globetrotterchat.android.ui.landing.LandingActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,20 +33,12 @@ class MainActivity : AppCompatActivity() {
                 binding.fragmentContainerViewMain.findNavController().navigateUp()
             }
         })
-
-        intent.getStringExtra("uid")?.run(viewModel::setUid)
-            ?: run(::navigateToLanding)
-
-        viewModel.uid.observe(this){ uid ->
-            if (uid==null){
-                navigateToLanding()
-            }
-
-        }
     }
 
-    private fun navigateToLanding() {
-        val intent = Intent(this, LandingActivity::class.java)
+    fun navigateToLanding() {
+        val intent = Intent(this, LandingActivity::class.java).apply {
+            putExtra(LandingActivity.SHOULD_LOGOUT_KEY,true)
+        }
         startActivity(intent)
     }
 

@@ -1,5 +1,7 @@
 package de.rs.globetrotterchat.android.data.remote
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -16,7 +18,5 @@ class FirebaseService {
         Firebase.auth.signInWithEmailAndPassword(email,password).await()
     }
 
-    fun signOut(){
-        Firebase.auth.signOut()
-    }
+    fun signOut(){ Firebase.auth.signOut() }
 }

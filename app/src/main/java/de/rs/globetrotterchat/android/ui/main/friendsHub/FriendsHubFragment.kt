@@ -20,15 +20,18 @@ class FriendsHubFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFriendsHubBinding.inflate(inflater)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        /*
         viewModel.getProfiles()
 
         viewModel.profiles.observe(viewLifecycleOwner){ profiles ->
             binding.rvFriendsHub.adapter = FriendsHubAdapter(profiles)
         }
+
+         */
     }
 }

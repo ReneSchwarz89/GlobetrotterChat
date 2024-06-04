@@ -28,13 +28,6 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.native_language_options,
-            android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spNativeLanguage.adapter = adapter
 
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -51,13 +44,25 @@ class SignUpFragment : Fragment() {
             pickMedia.launch(request)
         }
 
+        val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.native_language_options, android.R.layout.simple_spinner_item)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val autoCompleteTextView = binding.spNativeLanguage
+        autoCompleteTextView.setAdapter(adapter)
+
+        autoCompleteTextView.setOnClickListener {
+            autoCompleteTextView.showDropDown()
+        }
+
         binding.btnSignUp.setOnClickListener {
-            val selectedLanguage = binding.spNativeLanguage.selectedItem.toString()
+            autoCompleteTextView.setOnItemClickListener { _, _, position, _ ->
+                val selectedLanguage = adapter.getItem(position)
+                viewModel.setNativeLanguage(selectedLanguage.toString())
+            }
             viewModel.setProfileImage(binding.ivProfile.toString())
             viewModel.setEmail(binding.etEmail.text.toString())
             viewModel.setPassword(binding.etPassword.text.toString())
             viewModel.setNickname(binding.etNickName.text.toString())
-            viewModel.setNativeLanguage(selectedLanguage)
             viewModel.signUp()
         }
 

@@ -25,23 +25,17 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
         sealed class LoggedInOrSignedUp (val uid: String) : SessionState
         data class LoggedIn(val userId: String) : LoggedInOrSignedUp(userId)
         data class SignedUp(val userId: String) : LoggedInOrSignedUp(userId)
+        data object LoggedOut : SessionState
         data object Neutral : SessionState
         data object LoginFailed : SessionState
         data object SignupFailed : SessionState
     }
 
-    init {
-        checkUserLoginStatus()
+    fun checkUserLoginStatus() {
+            _sessionState.value = authService.userId
+                ?.let { uid -> SessionState.LoggedIn(uid) }
+                ?: SessionState.Neutral
     }
-
-
-    private fun checkUserLoginStatus() {
-        _sessionState.value = authService.userId
-            ?.let { uid -> SessionState.LoggedIn(uid) }
-            ?: SessionState.Neutral
-    }
-
-
 
     fun signUp() {
         viewModelScope.launch {
@@ -61,6 +55,19 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
+    fun logoutUser(){
+        viewModelScope.launch {
+            authService.signOut()
+            _sessionState.value = SessionState.LoggedOut
+        }
+    }
+
+    fun setProfileImage(profileImage: String?){
+        if (profileImage != null) {
+            this.profilePictureUrl = profileImage
+        }
+    }
+
     fun setEmail(email: String){
         this.email = email
     }
@@ -72,13 +79,7 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
     fun setNickname(nickname: String){
         this.nickname = nickname
     }
-
     fun setNativeLanguage(nativeLanguage: String){
         this.nativeLanguage = nativeLanguage
-    }
-    fun setProfileImage(profileImage: String?){
-        if (profileImage != null) {
-            this.profilePictureUrl = profileImage
-        }
     }
 }

@@ -12,6 +12,7 @@ class FriendsHubAdapter(private val profiles: List<Profile>): RecyclerView.Adapt
 
         fun bind(profile: Profile){
             binding.tvName.text = profile.nickname
+            //binding.ivProfile.te
         }
     }
 
