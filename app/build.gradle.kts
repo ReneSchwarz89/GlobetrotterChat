@@ -55,16 +55,16 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
-
-    // Retrofit and Moshi
-
-
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+    
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
