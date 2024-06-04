@@ -12,6 +12,10 @@ class LandingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLandingBinding
     private val viewModel: LandingViewModel by viewModels()
 
+    companion object{
+        const val SHOULD_LOGOUT_KEY = "SHOULD_LOGOUT"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +44,6 @@ class LandingActivity : AppCompatActivity() {
         }
         startActivity(intent)
     }
-
     private fun showDebugMessage(state: LandingViewModel.SessionState) {
         val message = when (state) {
             is LandingViewModel.SessionState.Neutral -> "Welcome"
@@ -51,8 +54,5 @@ class LandingActivity : AppCompatActivity() {
             is LandingViewModel.SessionState.SignupFailed -> "SignUp Failed"
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-    companion object{
-        const val SHOULD_LOGOUT_KEY = "SHOULD_LOGOUT"
     }
 }

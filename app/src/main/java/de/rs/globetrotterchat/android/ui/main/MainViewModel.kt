@@ -13,6 +13,11 @@ class MainViewModel(
     private val repository: Repository
 ) : AndroidViewModel(application) {
 
+    private var nickname = ""
+    private var nativeLanguage = ""
+    private var profilePictureUrl = ""
+
+
     val profiles = repository.profiles
 
     fun getProfiles() {
@@ -26,5 +31,19 @@ class MainViewModel(
             val profile = Profile("","Zeus","")
             repository.setProfile(profile)
         }
+    }
+
+    fun setProfileImage(profileImage: String?){
+        if (profileImage != null) {
+            this.profilePictureUrl = profileImage
+        }
+    }
+
+    fun setNickname(nickname: String){
+        this.nickname = nickname
+    }
+
+    fun setNativeLanguage(nativeLanguage: String){
+        this.nativeLanguage = nativeLanguage
     }
 }

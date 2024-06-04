@@ -60,37 +60,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="add new friends"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnAddFriends"
-                    app:layout_constraintEnd_toStartOf="@+id/btnAddFriends"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/btnAddFriends" />
-
-                <ImageView
-                    android:id="@+id/btnAddFriends"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/add_friends"
-                    android:focusable="true"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_plus"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

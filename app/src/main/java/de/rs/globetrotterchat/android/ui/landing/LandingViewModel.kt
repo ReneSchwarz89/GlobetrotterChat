@@ -17,9 +17,6 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
 
     private var email =  ""
     private var password = ""
-    private var nickname = ""
-    private var nativeLanguage = ""
-    private var profilePictureUrl = ""
 
     sealed interface SessionState {
         sealed class LoggedInOrSignedUp (val uid: String) : SessionState
@@ -62,24 +59,11 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
         }
     }
 
-    fun setProfileImage(profileImage: String?){
-        if (profileImage != null) {
-            this.profilePictureUrl = profileImage
-        }
-    }
-
     fun setEmail(email: String){
         this.email = email
     }
 
     fun setPassword(password: String){
         this.password = password
-    }
-
-    fun setNickname(nickname: String){
-        this.nickname = nickname
-    }
-    fun setNativeLanguage(nativeLanguage: String){
-        this.nativeLanguage = nativeLanguage
     }
 }
