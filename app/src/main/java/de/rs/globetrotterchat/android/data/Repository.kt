@@ -3,18 +3,13 @@ package de.rs.globetrotterchat.android.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import de.rs.globetrotterchat.android.data.model.Profile
-import de.rs.globetrotterchat.android.data.remote.FirebaseService
-import de.rs.globetrotterchat.android.data.remote.FirestoreService
+import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
 
-class Repository(private val firestoreService: FirestoreService){
-
-    private val firebaseService = FirebaseService()
+class Repository(private val firestoreService: FirestoreProfileService){
 
     private val _profiles = MutableLiveData<List<Profile>>()
     val profiles: LiveData<List<Profile>> get() = _profiles
-
 
     suspend fun setProfile(profile: Profile) {
         try {
@@ -24,20 +19,11 @@ class Repository(private val firestoreService: FirestoreService){
         }
     }
 
-    suspend fun getAllProfiles(): Boolean {
+    suspend fun getAllProfiles(){
         try {
-            val uid = firebaseService.userId ?: return false
-            val firestoreService = FirestoreService(uid)
             _profiles.value = firestoreService.getAllProfiles()
-            return true
         } catch (e: Exception){
             Log.e(Repository::class.simpleName,"Could not load profile")
-            return false
         }
     }
-
-    fun logout(){
-        firebaseService.signOut()
-    }
-
 }

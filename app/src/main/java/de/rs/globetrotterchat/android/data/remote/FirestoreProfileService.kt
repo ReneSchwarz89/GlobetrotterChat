@@ -5,7 +5,7 @@ import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.model.Profile
 import kotlinx.coroutines.tasks.await
 
-class FirestoreService(private val uid: String) {
+class FirestoreProfileService(private val uid: String) {
 
     private val database = Firebase.firestore
 
@@ -22,6 +22,4 @@ class FirestoreService(private val uid: String) {
         val result = database.collection("Profile").document(uid).get().await()
         return result.toObject(Profile::class.java)
     }
-
-
 }

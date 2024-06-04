@@ -32,6 +32,8 @@ class FriendsHubFragment : Fragment() {
             binding.rvFriendsHub.adapter = FriendsHubAdapter(profiles)
         }
 
+
          */
+
     }
 }
