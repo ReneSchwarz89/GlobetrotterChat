@@ -28,8 +28,13 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        //binding.spNativeLanguage.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, viewModel)
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.native_language_options,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spNativeLanguage.adapter = adapter
 
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -47,11 +52,12 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnSignUp.setOnClickListener {
+            val selectedLanguage = binding.spNativeLanguage.selectedItem.toString()
+            viewModel.setProfileImage(binding.ivProfile.toString())
             viewModel.setEmail(binding.etEmail.text.toString())
             viewModel.setPassword(binding.etPassword.text.toString())
             viewModel.setNickname(binding.etNickName.text.toString())
-            viewModel.setNativeLanguage(binding.spNativeLanguage.toString())
-            viewModel.setProfileImage(binding.ivProfile.toString())
+            viewModel.setNativeLanguage(selectedLanguage)
             viewModel.signUp()
         }
 

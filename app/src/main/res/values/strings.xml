@@ -17,9 +17,26 @@
 
     //String-Array for Spinner in signup Native Language
     <string-array name="native_language_options">
+        <item>Englisch</item>
+        <item>Mandarin-Chinesisch</item>
+        <item>Hindi</item>
+        <item>Spanisch</item>
+        <item>Französisch</item>
+        <item>Arabisch</item>
+        <item>Bengali</item>
+        <item>Russisch</item>
+        <item>Portugiesisch</item>
+        <item>Urdu</item>
+        <item>Indonesisch</item>
         <item>Deutsch</item>
-        <item>English</item>
-        <item>Spain</item>
-        <item>Français</item>
+        <item>Japanisch</item>
+        <item>Swahili</item>
+        <item>Türkisch</item>
+        <item>Italienisch</item>
+        <item>Polnisch</item>
+        <item>Niederländisch</item>
+        <item>Thai</item>
+        <item>Gujarati</item>
     </string-array>
+
 </resources>
