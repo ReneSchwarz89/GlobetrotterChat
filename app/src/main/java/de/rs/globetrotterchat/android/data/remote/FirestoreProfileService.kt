@@ -18,7 +18,7 @@ class FirestoreProfileService(private val uid: String) {
         return result.toObjects(Profile::class.java)
     }
 
-    suspend fun getProfile(uid: String): Profile? {
+    suspend fun getProfile(uid: String = this.uid): Profile? {
         val result = database.collection("Profile").document(uid).get().await()
         return result.toObject(Profile::class.java)
     }

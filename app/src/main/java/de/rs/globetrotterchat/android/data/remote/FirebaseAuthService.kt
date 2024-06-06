@@ -1,12 +1,10 @@
 package de.rs.globetrotterchat.android.data.remote
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
-class FirebaseService {
+class FirebaseAuthService {
 
     val userId: String? get() = Firebase.auth.uid
 

@@ -44,26 +44,20 @@
                     android:id="@+id/etNickName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nickname"
-                    android:inputType="textEmailAddress" />
+                    android:hint="Nickname" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:hint="Native Language">
+                app:hintEnabled="true">
 
-                <AutoCompleteTextView
-                    android:id="@+id/spNativeLanguage"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNativeLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:editable="false"
-                    android:focusable="false"
-                    android:inputType="none" />
-
+                    android:hint="Native Language"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -73,7 +67,6 @@
                 android:layout_marginTop="16dp"
                 android:text="Save Profile"
                 android:textColorLink="#FFFFFF" />
-
 
         </LinearLayout>
 
