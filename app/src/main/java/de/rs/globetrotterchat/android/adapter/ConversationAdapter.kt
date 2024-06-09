@@ -3,12 +3,8 @@ package de.rs.globetrotterchat.android.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.model.Conversation
-import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.databinding.ItemChatBinding
-import kotlinx.coroutines.tasks.await
 
 class ConversationAdapter(
     private val conversations: List<Conversation>
@@ -16,6 +12,7 @@ class ConversationAdapter(
 
     class ConversationViewHolder(private val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(conversation: Conversation){
+            binding.tvNickName.text = "test"
         }
     }
 

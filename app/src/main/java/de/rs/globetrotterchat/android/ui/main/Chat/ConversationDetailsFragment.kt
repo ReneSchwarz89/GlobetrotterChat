@@ -19,7 +19,6 @@ class ConversationDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentConversationDetailsBinding.inflate(inflater, container, false)
-        viewModel.loadConversation()
         return binding.root
     }
 }

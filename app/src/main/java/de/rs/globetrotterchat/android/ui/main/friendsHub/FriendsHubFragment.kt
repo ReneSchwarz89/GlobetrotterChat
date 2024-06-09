@@ -32,7 +32,6 @@ class FriendsHubFragment : Fragment() {
                 viewModel.createOrGetChatRoom(clickedProfileUid)
                 findNavController().navigate(R.id.action_friendsHubFragment_to_chatConversationFragment)
             }
-
             binding.rvFriendsHub.adapter = adapter
         }
     }

@@ -23,13 +23,12 @@ class ConversationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getConversationsForUser()
+        viewModel.loadConversations()
 
 
-        viewModel.conversation.observe(viewLifecycleOwner) { conversations ->
-            if (conversations.isNotEmpty()) {
-                binding.rvChats.adapter = ConversationAdapter(conversations)
-            }
+        viewModel.conversation.observe(viewLifecycleOwner) { conversation ->
+            binding.rvChats.adapter = ConversationAdapter(conversation)
+
         }
     }
 }
