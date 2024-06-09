@@ -6,9 +6,9 @@
 
             <fragment
                 android:id="@+id/chatsFragment"
-                android:name="de.rs.globetrotterchat.android.ui.main.Chat.ChatsFragment"
+                android:name="de.rs.globetrotterchat.android.ui.main.Chat.ConversationsFragment"
                 android:label="fragment_chats"
-                tools:layout="@layout/fragment_chats">
+                tools:layout="@layout/fragment_conversations">
                 <action
                     android:id="@+id/toChatConversationFragment"
                     app:destination="@id/chatConversationFragment" />
@@ -25,9 +25,9 @@
             </fragment>
             <fragment
                 android:id="@+id/chatConversationFragment"
-                android:name="de.rs.globetrotterchat.android.ui.main.Chat.ChatConversationFragment"
+                android:name="de.rs.globetrotterchat.android.ui.main.Chat.ConversationDetailsFragment"
                 android:label="ChatConversationFragment"
-                tools:layout="@layout/fragment_chat_conversation">
+                tools:layout="@layout/fragment_conversation_details">
                 <action
                     android:id="@+id/toChatsFragment"
                     app:destination="@id/chatsFragment" />

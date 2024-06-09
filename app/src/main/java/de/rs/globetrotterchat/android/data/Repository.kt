@@ -3,10 +3,12 @@ package de.rs.globetrotterchat.android.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.data.model.Profile
+import de.rs.globetrotterchat.android.data.remote.FirebaseConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
 
-class Repository(private val firestoreProfileService: FirestoreProfileService){
+class Repository(private val firestoreProfileService: FirestoreProfileService,private var conversationService : FirebaseConversationService){
 
     private val _profiles = MutableLiveData<List<Profile>>()
     val profiles: LiveData<List<Profile>> get() = _profiles
@@ -41,5 +43,34 @@ class Repository(private val firestoreProfileService: FirestoreProfileService){
             Log.e(Repository::class.simpleName,"Could not load profiles")
         }
     }
+
+
+    //Conversations
+
+    private val _conversations = MutableLiveData<List<Conversation>>()
+    val conversations: LiveData<List<Conversation>> get() = _conversations
+
+    suspend fun checkAndCreateChatRoom(loggedInUid: String, otherUserId: String): String {
+        try {
+            val conversationId = conversationService.generateConversationId(loggedInUid, otherUserId)
+            val conversationExists = conversationService.conversationExists(conversationId)
+            if (!conversationExists) {
+                conversationService.createConversation(conversationId, loggedInUid, otherUserId)
+            }
+            return conversationId
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Could not check or create chat room", e)
+            throw e
+        }
+    }
+
+    suspend fun getConversationsForUser(){
+        try {
+            _conversations.value = conversationService.getConversationsForUser()
+        } catch (e: Exception){
+            Log.e(Repository::class.simpleName,"Could not load profiles")
+        }
+    }
+
 
 }
