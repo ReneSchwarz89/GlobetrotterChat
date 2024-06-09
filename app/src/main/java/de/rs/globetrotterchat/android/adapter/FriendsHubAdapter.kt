@@ -2,12 +2,8 @@ package de.rs.globetrotterchat.android.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
-import androidx.navigation.navOptions
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.DocumentSnapshot
 import de.rs.globetrotterchat.android.data.model.Profile
-import de.rs.globetrotterchat.android.data.remote.FirebaseConversationService
 import de.rs.globetrotterchat.android.databinding.ItemFriendBinding
 
 class FriendsHubAdapter(

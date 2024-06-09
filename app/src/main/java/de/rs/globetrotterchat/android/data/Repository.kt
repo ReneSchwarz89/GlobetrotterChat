@@ -5,10 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.data.model.Profile
-import de.rs.globetrotterchat.android.data.remote.FirebaseConversationService
+import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
 
-class Repository(private val firestoreProfileService: FirestoreProfileService,private var conversationService : FirebaseConversationService){
+class Repository(
+    private val firestoreProfileService: FirestoreProfileService,
+    private var conversationService: FirestoreConversationService
+) {
 
     private val _profiles = MutableLiveData<List<Profile>>()
     val profiles: LiveData<List<Profile>> get() = _profiles
@@ -23,11 +26,12 @@ class Repository(private val firestoreProfileService: FirestoreProfileService,pr
             getCurrentUserProfile()
             _userProfile.postValue(profile)
             return true
-        } catch (e: Exception){
-            Log.e(Repository::class.simpleName,"Could not set profile $profile: $e")
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Could not set profile $profile: $e")
             return false
         }
     }
+
     suspend fun getCurrentUserProfile() {
         try {
             _userProfile.value = firestoreProfileService.getProfile()
@@ -36,11 +40,11 @@ class Repository(private val firestoreProfileService: FirestoreProfileService,pr
         }
     }
 
-    suspend fun getAllProfiles(){
+    suspend fun getAllProfiles() {
         try {
             _profiles.value = firestoreProfileService.getAllProfiles()
-        } catch (e: Exception){
-            Log.e(Repository::class.simpleName,"Could not load profiles")
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Could not load profiles")
         }
     }
 
@@ -52,7 +56,8 @@ class Repository(private val firestoreProfileService: FirestoreProfileService,pr
 
     suspend fun checkAndCreateChatRoom(loggedInUid: String, otherUserId: String): String {
         try {
-            val conversationId = conversationService.generateConversationId(loggedInUid, otherUserId)
+            val conversationId =
+                conversationService.generateConversationId(loggedInUid, otherUserId)
             val conversationExists = conversationService.conversationExists(conversationId)
             if (!conversationExists) {
                 conversationService.createConversation(conversationId, loggedInUid, otherUserId)
@@ -64,11 +69,14 @@ class Repository(private val firestoreProfileService: FirestoreProfileService,pr
         }
     }
 
-    suspend fun getConversationsForUser(){
+    suspend fun loadConversations() {
         try {
-            _conversations.value = conversationService.getConversationsForUser()
-        } catch (e: Exception){
-            Log.e(Repository::class.simpleName,"Could not load profiles")
+            val conversations = conversationService.loadConversations()
+            _conversations.postValue(conversations)
+            println("Conversations loaded: ${conversations.size}")
+        } catch (e: Exception) {
+            println("Loading conversations for user with UID: ${conversations.value.toString()}")
+            Log.e(Repository::class.simpleName, "AKTUELLER FEHLER ICH SUCHE WEITER!!! ",e)
         }
     }
 

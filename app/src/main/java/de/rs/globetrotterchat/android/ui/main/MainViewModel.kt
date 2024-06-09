@@ -7,7 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.Repository
 import de.rs.globetrotterchat.android.data.model.Profile
-import de.rs.globetrotterchat.android.data.remote.FirebaseConversationService
+import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
 import kotlinx.coroutines.launch
 
@@ -15,7 +15,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val loggedInUid = Firebase.auth.uid!!
     private val firestoreProfileService = FirestoreProfileService(loggedInUid)
-    private val firebaseConversationService = FirebaseConversationService(loggedInUid)
+    private val firebaseConversationService = FirestoreConversationService(loggedInUid)
     private val repository = Repository(firestoreProfileService,firebaseConversationService)
 
     val profiles = repository.profiles
@@ -47,15 +47,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getConversationsForUser(){
+    fun loadConversations(){
         viewModelScope.launch {
-            repository.getConversationsForUser()
-        }
-    }
-
-    fun loadConversation() {
-        viewModelScope.launch {
-
+            repository.loadConversations()
         }
     }
 
