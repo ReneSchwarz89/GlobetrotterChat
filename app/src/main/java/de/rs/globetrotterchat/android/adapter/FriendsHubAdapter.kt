@@ -12,7 +12,6 @@ class FriendsHubAdapter(
 ): RecyclerView.Adapter<FriendsHubAdapter.ProfileViewHolder>() {
 
     class ProfileViewHolder(private val binding: ItemFriendBinding): RecyclerView.ViewHolder(binding.root){
-
         fun bind(profile: Profile){
             binding.tvName.text = profile.nickname
         }

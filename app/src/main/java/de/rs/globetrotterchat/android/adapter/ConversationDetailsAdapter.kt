@@ -10,7 +10,7 @@ import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.databinding.ItemChatInBinding
 import de.rs.globetrotterchat.android.databinding.ItemChatOutBinding
 
-class ConversationDetailsAdapter(private var messages: MutableList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ConversationDetailsAdapter(var messages: MutableList<Message> = mutableListOf()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_IN = 1
@@ -32,8 +32,6 @@ class ConversationDetailsAdapter(private var messages: MutableList<Message>) : R
         notifyItemInserted(messages.size-1)
     }
 
-
-
     override fun getItemCount() = messages.size
 
     override fun getItemViewType(position: Int): Int {
@@ -53,11 +51,11 @@ class ConversationDetailsAdapter(private var messages: MutableList<Message>) : R
         val messages = messages[position]
         when (holder) {
             is MessageInViewHolder -> {
-                //holder.tvMessageIn.text = messages.text
+                holder.tvMessageIn.text = messages.senderText
 
             }
             is MessageOutViewHolder -> {
-                //holder.tvMessageOut.text = messages.text
+                holder.tvMessageOut.text = messages.senderText
 
             }
         }

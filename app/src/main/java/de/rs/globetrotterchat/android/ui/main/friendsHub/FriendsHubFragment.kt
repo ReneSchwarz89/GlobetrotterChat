@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.adapter.FriendsHubAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentFriendsHubBinding
 
@@ -28,9 +27,15 @@ class FriendsHubFragment : Fragment() {
         viewModel.getProfiles()
 
         viewModel.profiles.observe(viewLifecycleOwner){profiles ->
-            val adapter = FriendsHubAdapter(profiles){clickedProfileUid ->
-                viewModel.createOrGetChatRoom(clickedProfileUid)
-                findNavController().navigate(R.id.action_friendsHubFragment_to_chatConversationFragment)
+            val adapter = FriendsHubAdapter(profiles){ clickedProfileUid ->
+                val displayName = profiles.find { it.uid == clickedProfileUid }?.nickname!!
+                viewModel.createOrGetChatRoom(clickedProfileUid, displayName)
+                viewModel.currentConversationId.observe(viewLifecycleOwner) { conversationId ->
+                    if (conversationId.isNotEmpty()) {
+                        val action = FriendsHubFragmentDirections.friendsHubFragmentToConversationDetailsFragment(conversationId)
+                        findNavController().navigate(action)
+                    }
+                }
             }
             binding.rvFriendsHub.adapter = adapter
         }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import de.rs.globetrotterchat.android.data.model.Conversation
+import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
@@ -18,7 +19,6 @@ class Repository(
 
     private val _userProfile = MutableLiveData<Profile?>()
     val userProfile: LiveData<Profile?> get() = _userProfile
-
 
     suspend fun setProfile(profile: Profile): Boolean {
         try {
@@ -54,14 +54,17 @@ class Repository(
     private val _conversations = MutableLiveData<List<Conversation>>()
     val conversations: LiveData<List<Conversation>> get() = _conversations
 
-    suspend fun checkAndCreateChatRoom(loggedInUid: String, otherUserId: String): String {
+    private val _currentConversationId = MutableLiveData<String>()
+    val currentConversationId: LiveData<String> get() = _currentConversationId
+
+    suspend fun checkAndCreateConversation(loggedInUid: String, otherUserId: String, displayName: String): String {
         try {
-            val conversationId =
-                conversationService.generateConversationId(loggedInUid, otherUserId)
+            val conversationId = conversationService.generateConversationId(loggedInUid, otherUserId)
             val conversationExists = conversationService.conversationExists(conversationId)
             if (!conversationExists) {
-                conversationService.createConversation(conversationId, loggedInUid, otherUserId)
+                conversationService.createConversation(conversationId, loggedInUid, otherUserId, displayName)
             }
+            _currentConversationId.postValue(conversationId)
             return conversationId
         } catch (e: Exception) {
             Log.e(Repository::class.simpleName, "Could not check or create chat room", e)
@@ -69,16 +72,40 @@ class Repository(
         }
     }
 
-    suspend fun loadConversations() {
+    suspend fun loadConversationsForUser(loggedInUid: String) {
+        val profilesList = firestoreProfileService.getAllProfiles()
+        val conversationsList = conversationService.loadConversationsForUser()
+        val conversationsWithCorrectName = conversationsList.map { conversation ->
+            val otherUserId = conversation.participantsIds.first { it != loggedInUid }
+            val displayName = profilesList.firstOrNull { it.uid == otherUserId }?.nickname ?: "Unbekannt"
+            conversation.copy(displayName = displayName)
+        }
+        _conversations.postValue(conversationsWithCorrectName)
+    }
+
+    // Messages
+    private val _messages = MutableLiveData<List<Message>>()
+    val messages: LiveData<List<Message>> get() = _messages
+
+/*
+    suspend fun addMessageToConversation(conversationId: String, message: Message){
         try {
-            val conversations = conversationService.loadConversations()
-            _conversations.postValue(conversations)
-            println("Conversations loaded: ${conversations.size}")
+            conversationService.addMessageToConversation(conversationId,message)
         } catch (e: Exception) {
-            println("Loading conversations for user with UID: ${conversations.value.toString()}")
-            Log.e(Repository::class.simpleName, "AKTUELLER FEHLER ICH SUCHE WEITER!!! ",e)
+            Log.e(Repository::class.simpleName, "Conversation could not load.", e)
         }
     }
 
+    suspend fun loadMessages(conversationId: String) {
+        try {
+            val messages = conversationService.loadMessages(conversationId)
+            _messages.postValue(messages)
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Conversation could not load.", e)
+        }
 
+    }
+
+
+ */
 }

@@ -2,35 +2,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chatsFragment">
+    app:startDestination="@id/conversationFragment">
 
             <fragment
-                android:id="@+id/chatsFragment"
+                android:id="@+id/conversationFragment"
                 android:name="de.rs.globetrotterchat.android.ui.main.Chat.ConversationsFragment"
                 android:label="fragment_chats"
                 tools:layout="@layout/fragment_conversations">
                 <action
-                    android:id="@+id/toChatConversationFragment"
-                    app:destination="@id/chatConversationFragment" />
+                    android:id="@+id/toConversationDetailsFragment"
+                    app:destination="@id/ConversationDetailsFragment" />
             </fragment>
             <fragment
                 android:id="@+id/friendsHubFragment"
                 android:name="de.rs.globetrotterchat.android.ui.main.friendsHub.FriendsHubFragment"
                 android:label="fragment_friends_hub"
                 tools:layout="@layout/fragment_friends_hub">
-
                 <action
-                    android:id="@+id/action_friendsHubFragment_to_chatConversationFragment"
-                    app:destination="@id/chatConversationFragment" />
+                    android:id="@+id/friendsHubFragment_to_ConversationDetailsFragment"
+                    app:destination="@id/ConversationDetailsFragment" />
             </fragment>
             <fragment
-                android:id="@+id/chatConversationFragment"
+                android:id="@+id/ConversationDetailsFragment"
                 android:name="de.rs.globetrotterchat.android.ui.main.Chat.ConversationDetailsFragment"
                 android:label="ChatConversationFragment"
                 tools:layout="@layout/fragment_conversation_details">
+                <argument
+                    android:name="conversationId"
+                    app:argType="string" />
                 <action
-                    android:id="@+id/toChatsFragment"
-                    app:destination="@id/chatsFragment" />
+                    android:id="@+id/toConversationFragment"
+                    app:destination="@id/conversationFragment" />
             </fragment>
             <fragment
                 android:id="@+id/settingsFragment"
