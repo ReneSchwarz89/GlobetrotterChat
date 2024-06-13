@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.adapter.ConversationAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentConversationsBinding
 

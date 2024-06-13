@@ -1,6 +1,5 @@
 package de.rs.globetrotterchat.android.data.remote
 
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.model.Conversation

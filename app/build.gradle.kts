@@ -1,6 +1,3 @@
-import com.android.build.gradle.internal.cxx.logging.lifecycleln
-import com.android.utils.TraceUtils.simpleId
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
