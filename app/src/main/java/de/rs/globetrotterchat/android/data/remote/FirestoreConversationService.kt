@@ -1,5 +1,6 @@
 package de.rs.globetrotterchat.android.data.remote
 
+import com.google.firebase.database.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.model.Conversation
@@ -32,15 +33,15 @@ class FirestoreConversationService(private val uid: String) {
     }
 
     suspend fun addMessageToConversation(conversationId: String, message: Message){
-        val messagesRef = database.collection("Conversations").document(conversationId).collection("Messages")
-        messagesRef.add(message).await()
+        val messagesRef = database.collection("Conversations").document(conversationId).collection("Messages").document()
+        val messageWithTimestamp = message.copy(timestamp = System.currentTimeMillis())
+        messagesRef.set(messageWithTimestamp).await()
     }
 
     suspend fun loadMessages(conversationId: String): List<Message> {
         val messagesRef = database.collection("Conversations").document(conversationId).collection("Messages")
-        val querySnapshot = messagesRef.get().await()
+        val querySnapshot = messagesRef.orderBy("timestamp").get().await()
         return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
-
     }
 }
 

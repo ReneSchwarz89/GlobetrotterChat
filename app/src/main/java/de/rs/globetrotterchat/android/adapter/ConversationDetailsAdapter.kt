@@ -1,62 +1,59 @@
 package de.rs.globetrotterchat.android.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.databinding.ItemChatInBinding
 import de.rs.globetrotterchat.android.databinding.ItemChatOutBinding
+import de.rs.globetrotterchat.android.ui.main.MainViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
-class ConversationDetailsAdapter(var messages: MutableList<Message> = mutableListOf()) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ConversationDetailsAdapter(
+    var messages: MutableList<Message> = mutableListOf(),
+    private val viewModel: MainViewModel
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_IN = 1
         const val VIEW_TYPE_OUT = 2
     }
 
-    inner class MessageInViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemChatInBinding.bind(view)
-        val tvMessageIn: TextView = view.findViewById(R.id.tvChatIn)
-    }
+    private val loggedInUserId =  viewModel.userProfile.value?.uid
 
-    inner class MessageOutViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemChatOutBinding.bind(view)
-        val tvMessageOut: TextView = view.findViewById(R.id.tvChatOut)
-    }
+    inner class MessageInViewHolder(val binding: ItemChatInBinding) : RecyclerView.ViewHolder(binding.root)
 
-    fun sendMessage(message: Message){
-        messages.add(message)
-        notifyItemInserted(messages.size-1)
-    }
+    inner class MessageOutViewHolder(val binding: ItemChatOutBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount() = messages.size
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].incoming) VIEW_TYPE_IN else VIEW_TYPE_OUT
+        val message = messages[position]
+        return if (message.senderId == loggedInUserId) VIEW_TYPE_OUT else VIEW_TYPE_IN
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_IN) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_in, parent, false)
-            MessageInViewHolder(view)
+            val binding = ItemChatInBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MessageInViewHolder(binding)
         } else {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_out, parent, false)
-            MessageOutViewHolder(view)
+            val binding = ItemChatOutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MessageOutViewHolder(binding)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val messages = messages[position]
+        val message = messages[position]
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         when (holder) {
             is MessageInViewHolder -> {
-                holder.tvMessageIn.text = messages.senderText
-
+                holder.binding.tvChatIn.text = message.senderText
+                holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
             }
             is MessageOutViewHolder -> {
-                holder.tvMessageOut.text = messages.senderText
-
+                holder.binding.tvChatOut.text = message.senderText
+                holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
             }
         }
     }

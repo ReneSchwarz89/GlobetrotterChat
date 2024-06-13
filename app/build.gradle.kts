@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.material.v1120)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-
     //Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
@@ -61,11 +60,13 @@ dependencies {
 
     //Firebase
     implementation(platform(libs.firebase.bom))
+    implementation (libs.firebase.firestore.ktx)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
+    implementation(libs.androidx.uiautomator)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

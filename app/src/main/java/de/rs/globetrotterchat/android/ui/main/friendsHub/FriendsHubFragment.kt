@@ -17,7 +17,7 @@ class FriendsHubFragment : Fragment() {
     private lateinit var binding: FragmentFriendsHubBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFriendsHubBinding.inflate(inflater)
+        binding = FragmentFriendsHubBinding.inflate(inflater, container,false)
         return binding.root
     }
 
@@ -28,16 +28,21 @@ class FriendsHubFragment : Fragment() {
 
         viewModel.profiles.observe(viewLifecycleOwner){profiles ->
             val adapter = FriendsHubAdapter(profiles){ clickedProfileUid ->
-                val displayName = profiles.find { it.uid == clickedProfileUid }?.nickname!!
-                viewModel.createOrGetChatRoom(clickedProfileUid, displayName)
-                viewModel.currentConversationId.observe(viewLifecycleOwner) { conversationId ->
-                    if (conversationId.isNotEmpty()) {
-                        val action = FriendsHubFragmentDirections.friendsHubFragmentToConversationDetailsFragment(conversationId)
-                        findNavController().navigate(action)
-                    }
-                }
+                val displayName = profiles.find { it.uid == clickedProfileUid }?.nickname ?: "Unknown Nickname"
+                viewModel.createOrGetConversation(clickedProfileUid, displayName)
             }
             binding.rvFriendsHub.adapter = adapter
         }
+        viewModel.currentConversationId.observe(viewLifecycleOwner) { conversationId ->
+            if (conversationId.isNotEmpty()) {
+                navigateToConversationDetails(conversationId)
+
+                viewModel.resetCurrentConversationId()
+            }
+        }
+    }
+    private fun navigateToConversationDetails(conversationId: String) {
+        val action = FriendsHubFragmentDirections.friendsHubFragmentToConversationDetailsFragment(conversationId)
+        findNavController().navigate(action)
     }
 }

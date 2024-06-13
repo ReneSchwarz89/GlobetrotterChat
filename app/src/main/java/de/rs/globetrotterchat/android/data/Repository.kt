@@ -14,6 +14,8 @@ class Repository(
     private var conversationService: FirestoreConversationService
 ) {
 
+    //Profiles
+
     private val _profiles = MutableLiveData<List<Profile>>()
     val profiles: LiveData<List<Profile>> get() = _profiles
 
@@ -64,7 +66,7 @@ class Repository(
             if (!conversationExists) {
                 conversationService.createConversation(conversationId, loggedInUid, otherUserId, displayName)
             }
-            _currentConversationId.postValue(conversationId)
+            _currentConversationId.value = conversationId
             return conversationId
         } catch (e: Exception) {
             Log.e(Repository::class.simpleName, "Could not check or create chat room", e)
@@ -87,12 +89,17 @@ class Repository(
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>> get() = _messages
 
-/*
-    suspend fun addMessageToConversation(conversationId: String, message: Message){
+
+    suspend fun addMessageToConversation(conversationId: String, message: Message, loggedInUid: String){
         try {
-            conversationService.addMessageToConversation(conversationId,message)
+            val conversation = conversationService.loadConversationsForUser().find { it.conversationId == conversationId}
+            val otherUserId = conversation?.participantsIds?.firstOrNull { it != loggedInUid }
+            if (otherUserId != null) {
+                val newMessage = message.copy(receiverId = otherUserId)
+                conversationService.addMessageToConversation(conversationId, newMessage)
+            }
         } catch (e: Exception) {
-            Log.e(Repository::class.simpleName, "Conversation could not load.", e)
+            Log.e(Repository::class.simpleName, "Could not add message to conversation.", e)
         }
     }
 
@@ -103,9 +110,14 @@ class Repository(
         } catch (e: Exception) {
             Log.e(Repository::class.simpleName, "Conversation could not load.", e)
         }
-
     }
 
+    fun resetCurrentConversationId() {
+        try {
+            _currentConversationId.value = ""
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Could not reset current ConversationId.", e)
+        }
+    }
 
- */
 }

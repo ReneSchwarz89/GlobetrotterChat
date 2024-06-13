@@ -25,7 +25,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val messages = repository.messages
     val currentConversationId = repository.currentConversationId
 
-
     init {
         viewModelScope.launch {
             repository.getCurrentUserProfile()
@@ -45,7 +44,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun createOrGetChatRoom(otherUserId: String,displayName: String) {
+    fun createOrGetConversation(otherUserId: String, displayName: String) {
         viewModelScope.launch {
             repository.checkAndCreateConversation(loggedInUid, otherUserId, displayName)
         }
@@ -57,18 +56,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
-    fun sendMessage(conversationId: String, message: Message) {
+    fun sendMessage(senderText: String, conversationId: String) {
+        val message = Message(senderText = senderText, senderId = loggedInUid)
         viewModelScope.launch {
-            //repository.addMessageToConversation(conversationId, message)
+            repository.addMessageToConversation(conversationId, message, loggedInUid)
+        }
+    }
+    fun resetCurrentConversationId() {
+        viewModelScope.launch {
+            repository.resetCurrentConversationId()
+
         }
     }
 
     fun loadMessages(conversationId: String) {
         viewModelScope.launch {
-            //repository.loadMessages(conversationId)
+            repository.loadMessages(conversationId)
         }
     }
-
-
 }
