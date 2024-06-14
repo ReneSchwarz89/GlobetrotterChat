@@ -1,6 +1,7 @@
 package de.rs.globetrotterchat.android.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.rs.globetrotterchat.android.data.model.Message
@@ -20,11 +21,25 @@ class ConversationDetailsAdapter(
         const val VIEW_TYPE_OUT = 2
     }
 
-    private val loggedInUserId =  viewModel.userProfile.value?.uid
+    private val loggedInUserId = viewModel.userProfile.value?.uid
 
-    inner class MessageInViewHolder(val binding: ItemChatInBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MessageInViewHolder(val binding: ItemChatInBinding) : RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.ivVisibilityIn.setOnClickListener{
+                val visibility = binding.tvOptionalIn.visibility
+                 if(visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
+        }
+    }
 
-    inner class MessageOutViewHolder(val binding: ItemChatOutBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MessageOutViewHolder(val binding: ItemChatOutBinding) : RecyclerView.ViewHolder(binding.root){
+        init {
+            binding.ivVisibilityOut.setOnClickListener{
+                val visibility = binding.tvOptionalOut.visibility
+                if(visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            }
+        }
+    }
 
     override fun getItemCount() = messages.size
 
@@ -45,15 +60,17 @@ class ConversationDetailsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val message = messages[position]
-        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         when (holder) {
             is MessageInViewHolder -> {
                 holder.binding.tvChatIn.text = message.senderText
                 holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
+                holder.binding.tvOptionalIn.text = message.senderText
             }
             is MessageOutViewHolder -> {
                 holder.binding.tvChatOut.text = message.senderText
                 holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
+                holder.binding.tvOptionalOut.text = message.senderText
             }
         }
     }
