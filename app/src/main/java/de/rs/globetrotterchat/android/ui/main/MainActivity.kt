@@ -3,6 +3,7 @@ package de.rs.globetrotterchat.android.ui.main
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,14 @@ class MainActivity : AppCompatActivity() {
             putExtra(LandingActivity.SHOULD_LOGOUT_KEY,true)
         }
         startActivity(intent)
+    }
+
+    fun hideBottomNavigation() {
+        binding.bottomNavigationView.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 
 }

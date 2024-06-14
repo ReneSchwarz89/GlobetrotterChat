@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import de.rs.globetrotterchat.android.adapter.ConversationDetailsAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentConversationDetailsBinding
+import de.rs.globetrotterchat.android.ui.main.MainActivity
 import de.rs.globetrotterchat.android.ui.main.MainViewModel
 
 class ConversationDetailsFragment : Fragment() {
@@ -19,17 +20,15 @@ class ConversationDetailsFragment : Fragment() {
 
     private val args: ConversationDetailsFragmentArgs by navArgs()
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentConversationDetailsBinding.inflate(inflater, container, false)
         viewModel.loadMessages(this.args.conversationId)
         return binding.root
     }
 
-
     override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as MainActivity).hideBottomNavigation()
 
         val adapter = ConversationDetailsAdapter(mutableListOf(),viewModel)
         binding.rvMessages.adapter = adapter
@@ -41,15 +40,19 @@ class ConversationDetailsFragment : Fragment() {
 
         binding.btSend.setOnClickListener{
             val messageText = binding.etMessage.text.toString()
-
-            viewModel.sendMessage(messageText,args.conversationId)
+            if (messageText.isNotEmpty()){
+                viewModel.sendMessage(messageText,args.conversationId)
+                binding.etMessage.text?.clear()
+            }
         }
-
 
         binding.btnBack.setOnClickListener{
             findNavController().popBackStack()
         }
-
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (activity as MainActivity).showBottomNavigation()
     }
 
 }
