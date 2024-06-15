@@ -5,7 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 
-class StorageService {
+class FirestoreStorageService {
 
     private val storageReference = FirebaseStorage.getInstance().reference
 

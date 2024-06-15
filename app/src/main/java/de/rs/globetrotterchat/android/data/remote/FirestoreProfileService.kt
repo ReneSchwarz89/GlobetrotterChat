@@ -24,10 +24,5 @@ class FirestoreProfileService(private val uid: String) {
         return result.toObject(Profile::class.java)
     }
 
-    suspend fun getNickName(uid: String): String {
-        val profileRef = Firebase.firestore.collection("Profile").document(uid)
-        val snapshot = profileRef.get().await()
-        val profile = snapshot.toObject(Profile::class.java)
-        return profile?.nickname ?: "Unbekannter Benutzer"
-    }
+
 }

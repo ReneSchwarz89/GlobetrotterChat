@@ -26,6 +26,11 @@ class FriendsHubFragment : Fragment() {
 
         viewModel.getProfiles()
 
+        viewModel.userProfile.observe(viewLifecycleOwner){userProfile ->
+            binding.tvLoggedInUsername.text = userProfile?.nickname ?: "Unkown Nickname"
+        }
+
+
         viewModel.profiles.observe(viewLifecycleOwner){profiles ->
             val adapter = FriendsHubAdapter(profiles){ clickedProfileUid ->
                 val displayName = profiles.find { it.uid == clickedProfileUid }?.nickname ?: "Unknown Nickname"
@@ -33,6 +38,8 @@ class FriendsHubFragment : Fragment() {
             }
             binding.rvFriendsHub.adapter = adapter
         }
+
+
         viewModel.currentConversationId.observe(viewLifecycleOwner) { conversationId ->
             if (conversationId.isNotEmpty()) {
                 navigateToConversationDetails(conversationId)

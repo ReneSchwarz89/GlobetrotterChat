@@ -52,9 +52,10 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/iv_visibilityIn"
+        android:id="@+id/btn_set_visibility_in"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:alpha="0.3"
         android:clickable="true"
         android:focusable="true"
         android:contentDescription="@string/visibility"

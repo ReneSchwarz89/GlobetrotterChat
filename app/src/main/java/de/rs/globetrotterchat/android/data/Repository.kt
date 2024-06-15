@@ -119,5 +119,4 @@ class Repository(
             Log.e(Repository::class.simpleName, "Could not reset current ConversationId.", e)
         }
     }
-
 }

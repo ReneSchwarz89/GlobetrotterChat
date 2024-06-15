@@ -18,6 +18,7 @@
     <string name="friendshub">FriendsHub</string>
     <string name="settings">Settings</string>
     <string name="nickname">Nickname</string>
+    <string name="button_back">Button Back</string>
 
     //String-Array for Spinner in signup Native Language
     <string-array name="native_language_options">

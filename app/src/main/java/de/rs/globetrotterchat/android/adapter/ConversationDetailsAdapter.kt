@@ -21,22 +21,22 @@ class ConversationDetailsAdapter(
         const val VIEW_TYPE_OUT = 2
     }
 
-    private val loggedInUserId = viewModel.userProfile.value?.uid
+    private val loggedInUserId = viewModel.userProfile.value!!.uid
 
     inner class MessageInViewHolder(val binding: ItemChatInBinding) : RecyclerView.ViewHolder(binding.root){
         init {
-            binding.ivVisibilityIn.setOnClickListener{
-                val visibility = binding.tvOptionalIn.visibility
-                 if(visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.btnSetVisibilityIn.setOnClickListener{
+                binding.tvOptionalIn.visibility = if (binding.tvOptionalIn.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                binding.btnSetVisibilityIn.alpha = if (binding.tvOptionalIn.visibility == View.VISIBLE) 0.7f else 0.3f
             }
         }
     }
 
     inner class MessageOutViewHolder(val binding: ItemChatOutBinding) : RecyclerView.ViewHolder(binding.root){
         init {
-            binding.ivVisibilityOut.setOnClickListener{
-                val visibility = binding.tvOptionalOut.visibility
-                if(visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.btnSetVisibilityOut.setOnClickListener{
+                binding.tvOptionalOut.visibility = if (binding.tvOptionalOut.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                binding.btnSetVisibilityOut.alpha = if (binding.tvOptionalOut.visibility == View.VISIBLE) 0.7f else 0.3f
             }
         }
     }
@@ -66,6 +66,7 @@ class ConversationDetailsAdapter(
                 holder.binding.tvChatIn.text = message.senderText
                 holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
                 holder.binding.tvOptionalIn.text = message.senderText
+
             }
             is MessageOutViewHolder -> {
                 holder.binding.tvChatOut.text = message.senderText
