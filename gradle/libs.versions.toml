@@ -23,7 +23,7 @@ firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
 firebaseStorage = "21.0.0"
 uiautomator = "2.3.0"
-retrofit = "2.9.0"
+retrofit = "2.11.0"
 moshiKotlin = "1.15.0"
 google-cloud-translate = "2.45.0"
 

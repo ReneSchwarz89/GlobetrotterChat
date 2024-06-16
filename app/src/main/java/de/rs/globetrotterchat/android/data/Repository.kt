@@ -3,11 +3,17 @@ package de.rs.globetrotterchat.android.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import de.rs.globetrotterchat.android.BuildConfig
 import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.data.model.Profile
+import de.rs.globetrotterchat.android.data.model.TranslateRequest
+import de.rs.globetrotterchat.android.data.model.Translation
+import de.rs.globetrotterchat.android.data.model.TranslationResult
 import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
+import de.rs.globetrotterchat.android.data.remote.GoogleTranslationApi
+import de.rs.globetrotterchat.android.data.remote.GoogleTranslationService
 
 class Repository(
     private val firestoreProfileService: FirestoreProfileService,
@@ -117,6 +123,28 @@ class Repository(
             _currentConversationId.value = ""
         } catch (e: Exception) {
             Log.e(Repository::class.simpleName, "Could not reset current ConversationId.", e)
+        }
+    }
+
+    private val googleTranslationService: GoogleTranslationService by lazy{
+        GoogleTranslationApi.retrofitService
+    }
+
+    private val apikey = BuildConfig.apiKey
+
+    suspend fun translateMessageBeforeSending(originalText: String, targetLanguage: String): String {
+        val request = TranslateRequest(q = originalText, target = targetLanguage, apikey)
+        val response = googleTranslationService.translateText(request)
+        return response.data.translations.first().translatedText
+    }
+    suspend fun translateText(text: String, targetLanguage: String): Translation {
+        val request = TranslateRequest(q = text, target = targetLanguage, apikey)
+        val response = googleTranslationService.translateText(request)
+        if (response.isSuccessful) {
+            return response.data.translations.first()
+        } else {
+            // Handle Fehler
+            throw Exception("Translation failed: ${response.isSuccessful.not()}")
         }
     }
 }

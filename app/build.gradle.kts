@@ -6,6 +6,9 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
+val apiKey : String = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir,providers).getProperty("apiKey")
+
+
 android {
     namespace = "de.rs.globetrotterchat.android"
     compileSdk = 34
@@ -22,11 +25,15 @@ android {
 
     buildTypes {
         release {
+            buildConfigField("String", "apiKey",apiKey)
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            buildConfigField("String", "apiKey",apiKey)
         }
     }
     compileOptions {
@@ -38,6 +45,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -65,7 +73,7 @@ dependencies {
     implementation(libs.glide)
 
     //Google
-    implementation (libs.google.cloud.translate)
+    //implementation (libs.google.cloud.translate)
 
     //Firebase
     implementation(platform(libs.firebase.bom))
