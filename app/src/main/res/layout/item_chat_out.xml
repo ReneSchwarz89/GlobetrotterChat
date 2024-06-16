@@ -28,24 +28,28 @@
                 android:id="@+id/tvChatOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="8dp"
                 android:text="@string/testTextDE"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_max="270dp" />
 
             <TextView
                 android:id="@+id/tvTimeStamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="6dp"
                 android:text="@string/timestamp"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvChatOut"
                 tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
