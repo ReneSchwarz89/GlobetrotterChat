@@ -23,6 +23,9 @@ firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
 firebaseStorage = "21.0.0"
 uiautomator = "2.3.0"
+retrofit = "2.9.0"
+moshiKotlin = "1.15.0"
+google-cloud-translate = "2.45.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -34,6 +37,9 @@ firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "fir
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 firebase-firestore-ktx = { module = "com.google.firebase:firebase-firestore-ktx" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -49,6 +55,8 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+google-cloud-translate = { module = "com.google.cloud:google-cloud-translate", version.ref = "google-cloud-translate" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

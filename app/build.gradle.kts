@@ -51,12 +51,21 @@ dependencies {
     implementation(libs.material.v1120)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
     //Navigation
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    // Retrofit and Moshi
+    implementation(libs.retrofit)
+    implementation(libs.converter.moshi)
+    implementation(libs.moshi.kotlin)
+
     //Glide
     implementation(libs.glide)
+
+    //Google
+    implementation (libs.google.cloud.translate)
 
     //Firebase
     implementation(platform(libs.firebase.bom))
