@@ -19,29 +19,32 @@
     <string name="settings">Settings</string>
     <string name="nickname">Nickname</string>
     <string name="button_back">Button Back</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="native_language">Native Language</string>
 
     //String-Array for Spinner in signup Native Language
+
     <string-array name="native_language_options">
-        <item>Englisch</item>
-        <item>Mandarin-Chinesisch</item>
-        <item>Hindi</item>
-        <item>Spanisch</item>
-        <item>Französisch</item>
-        <item>Arabisch</item>
-        <item>Bengali</item>
-        <item>Russisch</item>
-        <item>Portugiesisch</item>
-        <item>Urdu</item>
-        <item>Indonesisch</item>
-        <item>Deutsch</item>
-        <item>Japanisch</item>
-        <item>Swahili</item>
-        <item>Türkisch</item>
-        <item>Italienisch</item>
-        <item>Polnisch</item>
-        <item>Niederländisch</item>
-        <item>Thai</item>
-        <item>Gujarati</item>
+        <item>Englisch - en</item>
+        <item>Mandarin-Chinesisch - zh-CN</item>
+        <item>Hindi - hi</item>
+        <item>Spanisch - es</item>
+        <item>Französisch - fr</item>
+        <item>Arabisch - ar</item>
+        <item>Bengali - bn</item>
+        <item>Russisch - ru</item>
+        <item>Portugiesisch - pt</item>
+        <item>Urdu - ur</item>
+        <item>Indonesisch - id</item>
+        <item>Deutsch - de</item>
+        <item>Japanisch - ja</item>
+        <item>Swahili - sw</item>
+        <item>Türkisch - tr</item>
+        <item>Italienisch - it</item>
+        <item>Polnisch - pl</item>
+        <item>Niederländisch - nl</item>
+        <item>Thai - th</item>
+        <item>Gujarati - gu</item>
     </string-array>
 
 </resources>

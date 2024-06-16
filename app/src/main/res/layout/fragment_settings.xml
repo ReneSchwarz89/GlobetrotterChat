@@ -17,9 +17,9 @@
             android:layout_height="180dp"
             android:layout_marginTop="80dp"
             android:background="@drawable/profile_image_mask_180x180"
-            android:padding="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/profile"
+            android:clipToOutline="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,16 +48,20 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                app:hintEnabled="true">
+                android:hint="@string/native_language">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNativeLanguage"
+                <AutoCompleteTextView
+                    android:id="@+id/spNativeLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Native Language"/>
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -65,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Save Profile"
+                android:text="@string/save_profile"
                 android:textColorLink="#FFFFFF" />
 
         </LinearLayout>
