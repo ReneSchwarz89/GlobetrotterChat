@@ -1,6 +1,7 @@
 package de.rs.globetrotterchat.android.ui.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -57,15 +58,36 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun sendMessage(senderText: String, conversationId: String) {
-        val message = Message(senderText = senderText, senderId = loggedInUid)
         viewModelScope.launch {
-            repository.addMessageToConversation(conversationId, message, loggedInUid)
+            // Zuerst die Zielsprache des Empfängers abrufen
+            val targetLanguage = repository.getOtherUserNativeLanguage(conversationId, loggedInUid)
+
+            // Überprüfe, ob die Zielsprache erhalten wurde
+            if (targetLanguage != null) {
+                // Übersetze den Text
+                val translatedText = repository.translateText(senderText, targetLanguage)
+
+                // Erstelle eine neue Nachricht mit dem übersetzten Text
+                val message = Message(
+                    senderId = loggedInUid,
+                    senderText = senderText,
+                    receiverNativeLanguage = targetLanguage,
+                    translatedText = translatedText
+                )
+
+                // Füge die Nachricht zur Konversation hinzu
+                repository.addMessageToConversation(conversationId, message, loggedInUid)
+                loadMessages(conversationId)
+            } else {
+                // Handle den Fall, dass keine Zielsprache gefunden wurde
+                Log.e("MainViewModel", "Keine Zielsprache gefunden.")
+            }
         }
     }
+
     fun resetCurrentConversationId() {
         viewModelScope.launch {
             repository.resetCurrentConversationId()
-
         }
     }
 

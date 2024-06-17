@@ -21,7 +21,4 @@ data class Translation(
     val translatedText: String
 )
 
-data class TranslationResult(
-    val translatedText: String
-)
 

@@ -63,7 +63,6 @@ class ConversationDetailsFragment : Fragment() {
             val messageText = binding.etMessage.text.toString()
             if (messageText.isNotEmpty()){
                 viewModel.sendMessage(messageText,args.conversationId)
-                viewModel.loadMessages(args.conversationId)
                 binding.etMessage.text?.clear()
                 binding.rvMessages.scrollToPosition(adapter.itemCount - 1)
             }

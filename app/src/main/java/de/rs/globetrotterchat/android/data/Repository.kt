@@ -8,8 +8,6 @@ import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.data.model.TranslateRequest
-import de.rs.globetrotterchat.android.data.model.Translation
-import de.rs.globetrotterchat.android.data.model.TranslationResult
 import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
 import de.rs.globetrotterchat.android.data.remote.GoogleTranslationApi
@@ -55,6 +53,7 @@ class Repository(
             Log.e(Repository::class.simpleName, "Could not load profiles")
         }
     }
+
 
 
     //Conversations
@@ -126,25 +125,38 @@ class Repository(
         }
     }
 
+    //Translate
+
     private val googleTranslationService: GoogleTranslationService by lazy{
         GoogleTranslationApi.retrofitService
     }
 
     private val apikey = BuildConfig.apiKey
 
-    suspend fun translateMessageBeforeSending(originalText: String, targetLanguage: String): String {
-        val request = TranslateRequest(q = originalText, target = targetLanguage, apikey)
-        val response = googleTranslationService.translateText(request)
-        return response.data.translations.first().translatedText
+    suspend fun getOtherUserNativeLanguage(conversationId: String, loggedInUid: String): String? {
+        return try {
+            val conversation = conversationService.loadConversationsForUser().find { it.conversationId == conversationId}
+            val otherUserId = conversation?.participantsIds?.firstOrNull { it != loggedInUid }
+            val otherUserProfile = firestoreProfileService.getProfile(otherUserId!!)
+            otherUserProfile?.nativeLanguage
+        } catch (e: Exception) {
+            Log.e("Repository", "Error occurred while fetching other user's native language: $e")
+            null
+        }
     }
-    suspend fun translateText(text: String, targetLanguage: String): Translation {
-        val request = TranslateRequest(q = text, target = targetLanguage, apikey)
-        val response = googleTranslationService.translateText(request)
-        if (response.isSuccessful) {
-            return response.data.translations.first()
+
+
+    suspend fun translateText(senderText: String, targetLanguage: String): String {
+        /*val response = googleTranslationService.translateText(
+            TranslateRequest(q = senderText, target = targetLanguage, key = apikey)
+        )
+
+         */
+        val response = googleTranslationService.translateText(senderText,targetLanguage,apikey)
+        if (response.isSuccessful && response.data.translations.isNotEmpty()) {
+            return response.data.translations.first().translatedText
         } else {
-            // Handle Fehler
-            throw Exception("Translation failed: ${response.isSuccessful.not()}")
+            throw Exception("Translation failed: $response")
         }
     }
 }

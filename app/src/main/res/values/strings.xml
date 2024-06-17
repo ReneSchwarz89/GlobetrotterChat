@@ -25,26 +25,26 @@
     //String-Array for Spinner in signup Native Language
 
     <string-array name="native_language_options">
-        <item>Englisch - en</item>
-        <item>Mandarin-Chinesisch - zh-CN</item>
-        <item>Hindi - hi</item>
-        <item>Spanisch - es</item>
-        <item>Französisch - fr</item>
-        <item>Arabisch - ar</item>
-        <item>Bengali - bn</item>
-        <item>Russisch - ru</item>
-        <item>Portugiesisch - pt</item>
-        <item>Urdu - ur</item>
-        <item>Indonesisch - id</item>
-        <item>Deutsch - de</item>
-        <item>Japanisch - ja</item>
-        <item>Swahili - sw</item>
-        <item>Türkisch - tr</item>
-        <item>Italienisch - it</item>
-        <item>Polnisch - pl</item>
-        <item>Niederländisch - nl</item>
-        <item>Thai - th</item>
-        <item>Gujarati - gu</item>
+        <item>en</item>
+        <item>zh-CN</item>
+        <item>hi</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>ar</item>
+        <item>bn</item>
+        <item>ru</item>
+        <item>pt</item>
+        <item>ur</item>
+        <item>id</item>
+        <item>de</item>
+        <item>ja</item>
+        <item>sw</item>
+        <item>tr</item>
+        <item>it</item>
+        <item>pl</item>
+        <item>nl</item>
+        <item>th</item>
+        <item>gu</item>
     </string-array>
 
 </resources>
