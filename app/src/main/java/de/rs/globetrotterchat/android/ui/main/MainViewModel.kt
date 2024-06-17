@@ -57,22 +57,42 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * Sendet eine Nachricht in einer Konversation.
+     *
+     * Diese Funktion überprüft zuerst, ob die Muttersprache des Empfängers von der des Absenders abweicht.
+     * Ist dies der Fall, wird der Text des Absenders in die Zielsprache übersetzt. Ansonsten wird der
+     * Originaltext verwendet. Die Nachricht wird dann erstellt und zur Konversation hinzugefügt.
+     * Abschließend werden die Nachrichten der Konversation neu geladen.
+     *
+     * @param senderText Der Text, den der Absender senden möchte.
+     * @param conversationId Die ID der Konversation, in der die Nachricht gesendet werden soll.
+     */
     fun sendMessage(senderText: String, conversationId: String) {
         viewModelScope.launch {
+            val senderNativeLanguage = userProfile.value?.nativeLanguage
             val targetLanguage = repository.getOtherUserNativeLanguage(conversationId, loggedInUid)
-            if (targetLanguage != null) {
+            if (targetLanguage != null && senderNativeLanguage != null && targetLanguage != senderNativeLanguage) {
                 val translatedText = repository.translateText(senderText, targetLanguage)
                 val message = Message(
                     senderId = loggedInUid,
                     senderText = senderText,
+                    senderNativeLanguage = senderNativeLanguage,
                     receiverNativeLanguage = targetLanguage,
                     translatedText = translatedText
                 )
                 repository.addMessageToConversation(conversationId, message, loggedInUid)
                 loadMessages(conversationId)
             } else {
-                // Handle den Fall, dass keine Zielsprache gefunden wurde
-                Log.e("MainViewModel", "Keine Zielsprache gefunden.")
+                val message = Message(
+                    senderId = loggedInUid,
+                    senderText = senderText,
+                    senderNativeLanguage = senderNativeLanguage,
+                    receiverNativeLanguage = targetLanguage,
+                    translatedText = senderText
+                )
+                repository.addMessageToConversation(conversationId, message, loggedInUid)
+                loadMessages(conversationId)
             }
         }
     }

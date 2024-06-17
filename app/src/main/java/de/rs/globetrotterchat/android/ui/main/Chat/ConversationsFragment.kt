@@ -32,8 +32,10 @@ class ConversationsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.rvChats.adapter = conversationAdapter
-        binding.rvChats.layoutManager = LinearLayoutManager(context)
+        with(binding.rvChats){
+            adapter = conversationAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
 
         viewModel.conversation.observe(viewLifecycleOwner) { conversations ->
             // Aktualisiere den Adapter mit den neuen Konversationen
