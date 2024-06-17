@@ -18,13 +18,51 @@ class LandingViewModel(application: Application): AndroidViewModel(application) 
     private var email =  ""
     private var password = ""
 
+    /**
+     * Definiert die möglichen Zustände einer Benutzersitzung.
+     *
+     * Diese versiegelte Schnittstelle (`sealed interface`) ermöglicht eine begrenzte Hierarchie von Zuständen,
+     * die eine Benutzersitzung annehmen kann. Jeder Zustand gibt Auskunft über den aktuellen Stand der Sitzung,
+     * wie zum Beispiel ob der Benutzer eingeloggt, angemeldet, ausgeloggt oder in einem neutralen Zustand ist.
+     */
     sealed interface SessionState {
+
+        /**
+         * Basisklasse für Zustände, in denen der Benutzer eingeloggt oder angemeldet ist.
+         * @param uid Die eindeutige Benutzer-ID.
+         */
         sealed class LoggedInOrSignedUp (val uid: String) : SessionState
+
+        /**
+         * Zustand, wenn der Benutzer erfolgreich eingeloggt ist.
+         * @param userId Die eindeutige Benutzer-ID des eingeloggten Benutzers.
+         */
         data class LoggedIn(val userId: String) : LoggedInOrSignedUp(userId)
+
+        /**
+         * Zustand, wenn der Benutzer erfolgreich angemeldet ist.
+         * @param userId Die eindeutige Benutzer-ID des angemeldeten Benutzers.
+         */
         data class SignedUp(val userId: String) : LoggedInOrSignedUp(userId)
+
+        /**
+         * Zustand, wenn der Benutzer nicht eingeloggt ist.
+         */
         data object LoggedOut : SessionState
+
+        /**
+         * Neutraler Zustand, typischerweise vor dem Login oder nach dem Logout.
+         */
         data object Neutral : SessionState
+
+        /**
+         * Zustand, wenn der Login-Versuch fehlgeschlagen ist.
+         */
         data object LoginFailed : SessionState
+
+        /**
+         * Zustand, wenn der Anmeldeversuch fehlgeschlagen ist.
+         */
         data object SignupFailed : SessionState
     }
 

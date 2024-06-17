@@ -18,18 +18,16 @@ class FriendsHubFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFriendsHubBinding.inflate(inflater, container,false)
+        viewModel.getProfiles()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProfiles()
-
         viewModel.userProfile.observe(viewLifecycleOwner){userProfile ->
             binding.tvLoggedInUsername.text = userProfile?.nickname ?: "Unkown Nickname"
         }
-
 
         viewModel.profiles.observe(viewLifecycleOwner){profiles ->
             val adapter = FriendsHubAdapter(profiles){ clickedProfileUid ->
@@ -39,15 +37,14 @@ class FriendsHubFragment : Fragment() {
             binding.rvFriendsHub.adapter = adapter
         }
 
-
         viewModel.currentConversationId.observe(viewLifecycleOwner) { conversationId ->
             if (conversationId.isNotEmpty()) {
                 navigateToConversationDetails(conversationId)
-
                 viewModel.resetCurrentConversationId()
             }
         }
     }
+
     private fun navigateToConversationDetails(conversationId: String) {
         val action = FriendsHubFragmentDirections.friendsHubFragmentToConversationDetailsFragment(conversationId)
         findNavController().navigate(action)

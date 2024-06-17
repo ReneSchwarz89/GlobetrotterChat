@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.databinding.FragmentSettingsBinding
@@ -45,8 +44,6 @@ class SettingsFragment : Fragment() {
                 // Hier kannst du den ausgewählten Sprachcode speichern oder verwenden
             }
         }
-
-
 
         binding.btnSaveProfile.setOnClickListener{
 

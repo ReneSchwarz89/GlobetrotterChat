@@ -59,23 +59,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun sendMessage(senderText: String, conversationId: String) {
         viewModelScope.launch {
-            // Zuerst die Zielsprache des Empfängers abrufen
             val targetLanguage = repository.getOtherUserNativeLanguage(conversationId, loggedInUid)
-
-            // Überprüfe, ob die Zielsprache erhalten wurde
             if (targetLanguage != null) {
-                // Übersetze den Text
                 val translatedText = repository.translateText(senderText, targetLanguage)
-
-                // Erstelle eine neue Nachricht mit dem übersetzten Text
                 val message = Message(
                     senderId = loggedInUid,
                     senderText = senderText,
                     receiverNativeLanguage = targetLanguage,
                     translatedText = translatedText
                 )
-
-                // Füge die Nachricht zur Konversation hinzu
                 repository.addMessageToConversation(conversationId, message, loggedInUid)
                 loadMessages(conversationId)
             } else {

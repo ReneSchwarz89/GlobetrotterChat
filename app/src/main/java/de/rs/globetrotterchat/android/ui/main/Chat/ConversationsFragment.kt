@@ -18,17 +18,14 @@ class ConversationsFragment : Fragment() {
     private lateinit var binding : FragmentConversationsBinding
     private lateinit var conversationAdapter : ConversationAdapter
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentConversationsBinding.inflate(inflater,container,false)
+        viewModel.loadConversations()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.loadConversations()
-
 
         conversationAdapter = ConversationAdapter(listOf()) { conversationId ->
             val action = ConversationsFragmentDirections.toConversationDetailsFragment(conversationId)

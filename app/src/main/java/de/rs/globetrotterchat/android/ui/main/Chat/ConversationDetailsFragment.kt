@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import de.rs.globetrotterchat.android.adapter.ConversationDetailsAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentConversationDetailsBinding
 import de.rs.globetrotterchat.android.ui.main.MainActivity
@@ -40,14 +39,13 @@ class ConversationDetailsFragment : Fragment() {
             binding.root.getWindowVisibleDisplayFrame(rect)
             val screenHeight = binding.root.height
             val keypadHeight = screenHeight - rect.bottom
-
-            // Wenn die Tastatur sichtbar wird
             if (keypadHeight > screenHeight * 0.3) {
                 binding.rvMessages.post {
                     binding.rvMessages.scrollToPosition(adapter.itemCount - 1)
                 }
             }
         }
+
         viewModel.conversation.observe(viewLifecycleOwner){ conversation ->
             val currentConversation = conversation.find { it.conversationId == args.conversationId }
             binding.tvDisplayName.text = currentConversation?.displayName
@@ -67,8 +65,6 @@ class ConversationDetailsFragment : Fragment() {
                 binding.rvMessages.scrollToPosition(adapter.itemCount - 1)
             }
         }
-
-
 
         binding.btnBack.setOnClickListener{
             findNavController().popBackStack()

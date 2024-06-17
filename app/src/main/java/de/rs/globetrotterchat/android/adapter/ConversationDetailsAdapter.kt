@@ -63,15 +63,18 @@ class ConversationDetailsAdapter(
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         when (holder) {
             is MessageInViewHolder -> {
-                holder.binding.tvChatIn.text = message.translatedText
-                holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
-                holder.binding.tvOptionalIn.text = message.senderText
-
+                with(holder.binding){
+                    tvChatIn.text = message.translatedText
+                    tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
+                    tvOptionalIn.text = message.senderText
+                }
             }
             is MessageOutViewHolder -> {
-                holder.binding.tvChatOut.text = message.senderText
-                holder.binding.tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
-                holder.binding.tvOptionalOut.text = message.translatedText
+                with(holder.binding){
+                    tvChatOut.text = message.senderText
+                    tvTimeStamp.text = dateFormat.format(Date(message.timestamp))
+                    tvOptionalOut.text = message.translatedText
+                }
             }
         }
     }
