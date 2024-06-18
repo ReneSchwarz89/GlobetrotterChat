@@ -24,5 +24,11 @@ class FirestoreProfileService(private val uid: String) {
         return result.toObject(Profile::class.java)
     }
 
+    suspend fun saveImageUrl(imageUrl: String){
+        val userRef = database.collection("Profile").document(uid)
+        userRef.update("profilePictureUrl", imageUrl).await()
+    }
+
+
 
 }

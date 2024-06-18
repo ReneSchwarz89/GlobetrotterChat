@@ -1,20 +1,25 @@
 package de.rs.globetrotterchat.android.data
 
+import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.ListenerRegistration
 import de.rs.globetrotterchat.android.BuildConfig
 import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
+import de.rs.globetrotterchat.android.data.remote.FirestoreStorageService
 import de.rs.globetrotterchat.android.data.remote.GoogleTranslationApi
 import de.rs.globetrotterchat.android.data.remote.GoogleTranslationService
 
 class Repository(
     private val firestoreProfileService: FirestoreProfileService,
-    private var conversationService: FirestoreConversationService
+    private var conversationService: FirestoreConversationService,
+    private val firestoreStorageService: FirestoreStorageService
 ) {
 
     //Profiles
@@ -43,6 +48,21 @@ class Repository(
         } catch (e: Exception) {
             Log.e(Repository::class.simpleName, "Could not set profile $profile: $e")
             return false
+        }
+    }
+
+    suspend fun uploadImageAndSaveUrl(imageUri: Uri) {
+        try {
+            val imageUrl = firestoreStorageService.uploadImage(imageUri)
+            val loggedInUserProfile = firestoreProfileService.getProfile() != null
+            if (loggedInUserProfile) {
+                firestoreProfileService.saveImageUrl(imageUrl)
+            } else{
+                Log.e(Repository::class.simpleName, " No Profile found. Save Profile Data first")
+            }
+        }
+        catch (e: Exception){
+            Log.e(Repository::class.simpleName, "Could not upload image: $e")
         }
     }
 
@@ -128,8 +148,7 @@ class Repository(
             val conversationsList = conversationService.loadConversationsForUser()
             val conversationsWithCorrectName = conversationsList.map { conversation ->
                 val otherUserId = conversation.participantsIds.first { it != loggedInUid }
-                val displayName =
-                    profilesList.firstOrNull { it.uid == otherUserId }?.nickname ?: "Unbekannt"
+                val displayName = profilesList.firstOrNull { it.uid == otherUserId }?.nickname ?: "Unbekannt"
                 conversation.copy(displayName = displayName)
             }
             _conversations.postValue(conversationsWithCorrectName)
@@ -200,6 +219,22 @@ class Repository(
         }
     }
 
+    private var messagesListenerRegistration: ListenerRegistration? = null
+
+    fun startListeningForMessages(conversationId: String) {
+        messagesListenerRegistration = conversationService.listenForMessages(conversationId) { messages ->
+            // Aktualisiere LiveData mit den neuen Nachrichten
+            _messages.postValue(messages)
+        }
+    }
+
+    fun stopListeningForMessages() {
+        // Entferne den Listener, wenn er existiert
+        messagesListenerRegistration?.remove()
+        messagesListenerRegistration = null
+    }
+
+
     //Translate
     private val googleTranslationService: GoogleTranslationService by lazy { GoogleTranslationApi.retrofitService }
     private val apikey = BuildConfig.apiKey
@@ -237,8 +272,7 @@ class Repository(
      */
     suspend fun translateText(senderText: String, targetLanguage: String): String {
         try {
-            val response =
-                googleTranslationService.translateText(senderText, targetLanguage, apikey)
+            val response = googleTranslationService.translateText(senderText, targetLanguage, apikey)
             if (response.isSuccessful && response.data.translations.isNotEmpty()) {
                 return response.data.translations.first().translatedText
             } else {

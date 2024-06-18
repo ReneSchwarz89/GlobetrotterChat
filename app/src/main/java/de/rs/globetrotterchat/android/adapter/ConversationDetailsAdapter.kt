@@ -21,8 +21,6 @@ class ConversationDetailsAdapter(
         const val VIEW_TYPE_OUT = 2
     }
 
-    private val loggedInUserId = viewModel.userProfile.value!!.uid
-
     inner class MessageInViewHolder(val binding: ItemChatInBinding) : RecyclerView.ViewHolder(binding.root){
         init {
             binding.btnSetVisibilityIn.setOnClickListener{
@@ -45,7 +43,7 @@ class ConversationDetailsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val message = messages[position]
-        return if (message.senderId == loggedInUserId) VIEW_TYPE_OUT else VIEW_TYPE_IN
+        return if (message.senderId == viewModel.userProfile.value!!.uid) VIEW_TYPE_OUT else VIEW_TYPE_IN
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

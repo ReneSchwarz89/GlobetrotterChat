@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Berechtigung, um auf die Kamera zuzugreifen -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Berechtigung, um auf den externen Speicher zuzugreifen -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"

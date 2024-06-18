@@ -1,6 +1,7 @@
 package de.rs.globetrotterchat.android.ui.main
 
 import android.app.Application
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.data.remote.FirestoreConversationService
 import de.rs.globetrotterchat.android.data.remote.FirestoreProfileService
+import de.rs.globetrotterchat.android.data.remote.FirestoreStorageService
 import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,7 +20,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val loggedInUid = Firebase.auth.uid!!
     private val firestoreProfileService = FirestoreProfileService(loggedInUid)
     private val firebaseConversationService = FirestoreConversationService(loggedInUid)
-    private val repository = Repository(firestoreProfileService,firebaseConversationService)
+    private val firestoreStorageService = FirestoreStorageService(loggedInUid)
+    private val repository = Repository(firestoreProfileService,firebaseConversationService,firestoreStorageService)
 
     val profiles = repository.profiles
     val userProfile = repository.userProfile
@@ -27,15 +30,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val currentConversationId = repository.currentConversationId
 
     init {
-        viewModelScope.launch {
-            repository.getCurrentUserProfile()
-        }
+        loadUserProfile()
     }
 
     fun setProfile(nickname: String, nativeLanguage: String){
         viewModelScope.launch {
             val profile = Profile(uid = loggedInUid, nickname,nativeLanguage)
             repository.setProfile(profile)
+        }
+    }
+
+    fun loadUserProfile() {
+        viewModelScope.launch {
+            repository.getCurrentUserProfile()
+        }
+    }
+
+    fun uploadProfileImage(imageUri: Uri) {
+        viewModelScope.launch {
+            repository.uploadImageAndSaveUrl(imageUri)
         }
     }
 
@@ -54,6 +67,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun loadConversations(){
         viewModelScope.launch {
             repository.loadConversationsForUser(loggedInUid)
+        }
+    }
+
+    fun resetCurrentConversationId() {
+        viewModelScope.launch {
+            repository.resetCurrentConversationId()
         }
     }
 
@@ -97,15 +116,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun resetCurrentConversationId() {
-        viewModelScope.launch {
-            repository.resetCurrentConversationId()
-        }
-    }
-
     fun loadMessages(conversationId: String) {
         viewModelScope.launch {
             repository.loadMessages(conversationId)
         }
     }
+
+    fun startListeningForMessages(conversationId: String) {
+        viewModelScope.launch {
+            repository.startListeningForMessages(conversationId)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        repository.stopListeningForMessages()
+    }
+
+
 }

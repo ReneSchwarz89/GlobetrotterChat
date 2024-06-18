@@ -1,5 +1,9 @@
 package de.rs.globetrotterchat.android.data.remote
 
+import android.content.ContentValues.TAG
+import android.nfc.Tag
+import android.util.Log
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import de.rs.globetrotterchat.android.data.model.Conversation
@@ -42,6 +46,19 @@ class FirestoreConversationService(private val uid: String) {
         val querySnapshot = messagesRef.orderBy("timestamp").get().await()
         return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
     }
+
+    fun listenForMessages(conversationId: String, onMessageUpdated: (List<Message>) -> Unit): ListenerRegistration {
+        val messageRef = database.collection("Conversations").document(conversationId).collection("Messages")
+        return messageRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.e(TAG, "Listen failed", e)
+                return@addSnapshotListener
+            }
+            val messages = snapshot?.documents?.mapNotNull { it.toObject(Message::class.java) } ?: listOf()
+            onMessageUpdated(messages)
+        }
+    }
+
 }
 
 

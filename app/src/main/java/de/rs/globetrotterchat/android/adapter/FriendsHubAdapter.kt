@@ -3,6 +3,7 @@ package de.rs.globetrotterchat.android.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import de.rs.globetrotterchat.android.data.model.Profile
 import de.rs.globetrotterchat.android.databinding.ItemFriendBinding
 
@@ -14,6 +15,12 @@ class FriendsHubAdapter(
     class ProfileViewHolder(private val binding: ItemFriendBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(profile: Profile){
             binding.tvName.text = profile.nickname
+            val profilePictureUrlIsNotNull = profile.profilePictureUrl != null
+            if (profilePictureUrlIsNotNull){
+                Glide.with(binding.ivProfile)
+                    .load(profile.profilePictureUrl)
+                    .into(binding.ivProfile)
+            }
         }
     }
 

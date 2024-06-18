@@ -1,11 +1,5 @@
 package de.rs.globetrotterchat.android.data.model
 
-data class TranslateRequest(
-    val q: String,
-    val target: String,
-    val key: String
-)
-
 data class TranslateResponse(
     val data: TranslationData
 ) {

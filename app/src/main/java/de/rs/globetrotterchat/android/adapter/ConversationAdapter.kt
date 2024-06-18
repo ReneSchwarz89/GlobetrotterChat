@@ -28,6 +28,7 @@ class ConversationAdapter(
         val conversation = conversations[position]
         holder.bind(conversation)
 
+
         holder.itemView.setOnClickListener {
             conversation.conversationId?.let { id ->
                 onItemClicked(id)
