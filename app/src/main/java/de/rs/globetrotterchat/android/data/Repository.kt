@@ -42,7 +42,6 @@ class Repository(
     suspend fun setProfile(profile: Profile): Boolean {
         try {
             firestoreProfileService.setProfile(profile)
-            getCurrentUserProfile()
             _userProfile.postValue(profile)
             return true
         } catch (e: Exception) {
@@ -51,6 +50,18 @@ class Repository(
         }
     }
 
+    /**
+     * Lädt ein Bild hoch und speichert die URL.
+     *
+     * Diese suspendierbare Funktion lädt zuerst ein Bild anhand der übergebenen `imageUri` hoch,
+     * indem sie den `firestoreStorageService` verwendet. Nach erfolgreichem Hochladen wird überprüft,
+     * ob ein Profil für den eingeloggten Benutzer vorhanden ist. Ist dies der Fall, wird die URL des Bildes
+     * im Profil gespeichert. Wenn kein Profil gefunden wird, wird eine Fehlermeldung geloggt.
+     *
+     * @param imageUri Die URI des Bildes, das hochgeladen werden soll.
+     * @throws Exception Wenn beim Hochladen des Bildes oder beim Speichern der URL ein Fehler auftritt,
+     *                   wird eine Ausnahme geworfen und geloggt.
+     */
     suspend fun uploadImageAndSaveUrl(imageUri: Uri) {
         try {
             val imageUrl = firestoreStorageService.uploadImage(imageUri)

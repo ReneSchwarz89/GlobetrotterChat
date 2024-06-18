@@ -32,6 +32,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         loadUserProfile()
     }
 
+    //Profile
+
     fun setProfile(nickname: String, nativeLanguage: String){
         viewModelScope.launch {
             val profile = Profile(uid = loggedInUid, nickname,nativeLanguage)
@@ -57,6 +59,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    //Conversations
+
     fun createOrGetConversation(otherUserId: String, displayName: String) {
         viewModelScope.launch {
             repository.checkAndCreateConversation(loggedInUid, otherUserId, displayName)
@@ -74,6 +78,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             repository.resetCurrentConversationId()
         }
     }
+
+    //Messages
 
     /**
      * Sendet eine Nachricht in einer Konversation.
@@ -119,11 +125,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
         repository.stopListeningForMessages()
     }
-
-
 }
