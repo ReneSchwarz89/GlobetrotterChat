@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import de.rs.globetrotterchat.android.adapter.ConversationDetailsAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentConversationDetailsBinding
 import de.rs.globetrotterchat.android.ui.main.MainActivity
@@ -24,13 +23,14 @@ class ConversationDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentConversationDetailsBinding.inflate(inflater, container, false)
-        viewModel.loadMessages(args.conversationId)
+
         return binding.root
     }
 
     override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).hideBottomNavigation()
+        viewModel.startListeningForMessages(args.conversationId)
 
         val adapter = ConversationDetailsAdapter(mutableListOf(),viewModel)
         binding.rvMessages.adapter = adapter
@@ -56,7 +56,10 @@ class ConversationDetailsFragment : Fragment() {
         }
 
         viewModel.messages.observe(viewLifecycleOwner) { messages ->
-            adapter.messages = messages.toMutableList()
+
+            (binding.rvMessages.adapter as ConversationDetailsAdapter).messages = messages.toMutableList()
+            binding.rvMessages.adapter?.notifyDataSetChanged()
+            // Scrolle zum Ende der Nachrichtenliste
             binding.rvMessages.scrollToPosition(adapter.itemCount - 1)
         }
 

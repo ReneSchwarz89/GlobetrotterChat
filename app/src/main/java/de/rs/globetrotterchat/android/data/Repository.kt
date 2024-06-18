@@ -188,24 +188,6 @@ class Repository(
     }
 
     /**
-     * Lädt die Nachrichten für eine gegebene Konversations-ID.
-     *
-     * Diese Funktion ruft den Nachrichtenladeprozess für eine spezifische Konversation auf.
-     * Die geladenen Nachrichten werden dann in das LiveData-Objekt `_messages` gepostet.
-     * Im Fehlerfall wird eine Fehlermeldung im Log ausgegeben.
-     *
-     * @param conversationId Die ID der Konversation, deren Nachrichten geladen werden sollen.
-     */
-    suspend fun loadMessages(conversationId: String) {
-        try {
-            val messages = conversationService.loadMessages(conversationId)
-            _messages.postValue(messages)
-        } catch (e: Exception) {
-            Log.e(Repository::class.simpleName, "Conversation could not load.", e)
-        }
-    }
-
-    /**
      * Setzt die aktuelle Konversations-ID zurück.
      *
      * Diese Funktion setzt die LiveData-Variable `_currentConversationId` auf einen leeren String zurück.
@@ -221,19 +203,41 @@ class Repository(
 
     private var messagesListenerRegistration: ListenerRegistration? = null
 
+    /**
+     * Startet das Abhören von Nachrichten für eine bestimmte Konversation.
+     *
+     * Diese Funktion entfernt zunächst einen vorhandenen Listener, falls einer registriert ist.
+     * Anschließend registriert sie einen neuen Listener über den `conversationService`, um
+     * Nachrichten für die angegebene Konversations-ID zu empfangen. Empfangene Nachrichten werden
+     * dann im `_messages` LiveData-Objekt veröffentlicht.
+     *
+     * @param conversationId Die ID der Konversation, für die Nachrichten empfangen werden sollen.
+     * @throws Exception Wenn beim Starten des Listeners ein Fehler auftritt, wird eine Ausnahme geworfen.
+     *                   Der Fehler wird geloggt und der Stacktrace ausgegeben.
+     */
     fun startListeningForMessages(conversationId: String) {
-        messagesListenerRegistration = conversationService.listenForMessages(conversationId) { messages ->
-            // Aktualisiere LiveData mit den neuen Nachrichten
-            _messages.postValue(messages)
+        try {
+            messagesListenerRegistration?.remove()
+            messagesListenerRegistration = conversationService.listenForMessages(conversationId) { messages ->
+                _messages.postValue(messages)
+            }
+        } catch (e: Exception) {
+            Log.e(Repository::class.simpleName, "Could not Start Listening for Messages", e)
+            e.printStackTrace()
         }
     }
 
+    /**
+     * Beendet das Abhören von Nachrichten.
+     *
+     * Diese Funktion entfernt den aktuellen Listener, der für das Abhören von Nachrichten registriert ist,
+     * falls ein solcher existiert. Anschließend setzt sie die `messagesListenerRegistration` auf `null`,
+     * um sicherzustellen, dass keine weiteren Nachrichten empfangen werden und um Ressourcen freizugeben.
+     */
     fun stopListeningForMessages() {
-        // Entferne den Listener, wenn er existiert
         messagesListenerRegistration?.remove()
         messagesListenerRegistration = null
     }
-
 
     //Translate
     private val googleTranslationService: GoogleTranslationService by lazy { GoogleTranslationApi.retrofitService }

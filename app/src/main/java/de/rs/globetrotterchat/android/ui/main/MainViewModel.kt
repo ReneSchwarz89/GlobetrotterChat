@@ -2,7 +2,6 @@ package de.rs.globetrotterchat.android.ui.main
 
 import android.app.Application
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
@@ -101,7 +100,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     translatedText = translatedText
                 )
                 repository.addMessageToConversation(conversationId, message, loggedInUid)
-                loadMessages(conversationId)
             } else {
                 val message = Message(
                     senderId = loggedInUid,
@@ -111,14 +109,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     translatedText = senderText
                 )
                 repository.addMessageToConversation(conversationId, message, loggedInUid)
-                loadMessages(conversationId)
             }
-        }
-    }
-
-    fun loadMessages(conversationId: String) {
-        viewModelScope.launch {
-            repository.loadMessages(conversationId)
         }
     }
 
@@ -127,6 +118,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             repository.startListeningForMessages(conversationId)
         }
     }
+
 
     override fun onCleared() {
         super.onCleared()

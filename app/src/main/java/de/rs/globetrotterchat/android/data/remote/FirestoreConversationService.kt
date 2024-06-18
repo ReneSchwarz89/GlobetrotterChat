@@ -41,20 +41,14 @@ class FirestoreConversationService(private val uid: String) {
         messagesRef.set(messageWithTimestamp).await()
     }
 
-    suspend fun loadMessages(conversationId: String): List<Message> {
-        val messagesRef = database.collection("Conversations").document(conversationId).collection("Messages")
-        val querySnapshot = messagesRef.orderBy("timestamp").get().await()
-        return querySnapshot.documents.mapNotNull { it.toObject(Message::class.java) }
-    }
-
     fun listenForMessages(conversationId: String, onMessageUpdated: (List<Message>) -> Unit): ListenerRegistration {
         val messageRef = database.collection("Conversations").document(conversationId).collection("Messages")
-        return messageRef.addSnapshotListener { snapshot, e ->
+        return messageRef.orderBy("timestamp").addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.e(TAG, "Listen failed", e)
                 return@addSnapshotListener
             }
-            val messages = snapshot?.documents?.mapNotNull { it.toObject(Message::class.java) } ?: listOf()
+            val messages = snapshot?.documents?.mapNotNull { it.toObject(Message::class.java) } ?: mutableListOf()
             onMessageUpdated(messages)
         }
     }
