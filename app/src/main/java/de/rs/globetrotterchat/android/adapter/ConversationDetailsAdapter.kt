@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.data.model.Message
 import de.rs.globetrotterchat.android.databinding.ItemChatInBinding
 import de.rs.globetrotterchat.android.databinding.ItemChatOutBinding

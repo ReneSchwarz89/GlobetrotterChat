@@ -159,8 +159,10 @@ class Repository(
             val conversationsList = conversationService.loadConversationsForUser()
             val conversationsWithCorrectName = conversationsList.map { conversation ->
                 val otherUserId = conversation.participantsIds.first { it != loggedInUid }
-                val displayName = profilesList.firstOrNull { it.uid == otherUserId }?.nickname ?: "Unbekannt"
-                conversation.copy(displayName = displayName)
+                val otherUserProfile = profilesList.firstOrNull { it.uid == otherUserId }
+                val displayName = otherUserProfile?.nickname ?: "Unknown Nickname"
+                val displayPictureUrl = otherUserProfile?.profilePictureUrl ?: "Unknown Url"
+                conversation.copy(displayName = displayName, displayPictureUrl = displayPictureUrl)
             }
             _conversations.postValue(conversationsWithCorrectName)
         } catch (e: Exception) {
@@ -297,7 +299,5 @@ class Repository(
             e.printStackTrace()
             throw Exception("An error occurred during translation: ${e.message}")
         }
-
-
     }
 }

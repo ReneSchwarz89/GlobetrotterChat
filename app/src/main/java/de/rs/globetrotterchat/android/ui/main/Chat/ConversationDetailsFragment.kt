@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.adapter.ConversationDetailsAdapter
 import de.rs.globetrotterchat.android.databinding.FragmentConversationDetailsBinding
 import de.rs.globetrotterchat.android.ui.main.MainActivity
@@ -20,10 +22,8 @@ class ConversationDetailsFragment : Fragment() {
     private val viewModel: MainViewModel by activityViewModels()
     private val args: ConversationDetailsFragmentArgs by navArgs()
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentConversationDetailsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -53,6 +53,12 @@ class ConversationDetailsFragment : Fragment() {
         viewModel.conversation.observe(viewLifecycleOwner){ conversation ->
             val currentConversation = conversation.find { it.conversationId == args.conversationId }
             binding.tvDisplayName.text = currentConversation?.displayName
+            if (currentConversation != null) {
+                Glide.with(binding.ivProfile)
+                    .load(currentConversation.displayPictureUrl)
+                    .placeholder(R.drawable.profile)
+                    .into(binding.ivProfile)
+            }
         }
 
         viewModel.messages.observe(viewLifecycleOwner) { messages ->
@@ -76,6 +82,7 @@ class ConversationDetailsFragment : Fragment() {
             findNavController().popBackStack()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         (activity as MainActivity).showBottomNavigation()

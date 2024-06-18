@@ -3,6 +3,8 @@ package de.rs.globetrotterchat.android.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import de.rs.globetrotterchat.android.R
 import de.rs.globetrotterchat.android.data.model.Conversation
 import de.rs.globetrotterchat.android.databinding.ItemChatBinding
 
@@ -14,6 +16,10 @@ class ConversationAdapter(
     class ConversationViewHolder(private val binding: ItemChatBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(conversation: Conversation){
             binding.tvNickName.text = conversation.displayName
+            Glide.with(binding.ivProfile)
+                .load(conversation.displayPictureUrl)
+                .placeholder(R.drawable.profile)
+                .into(binding.ivProfile)
         }
     }
 
@@ -27,7 +33,6 @@ class ConversationAdapter(
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
         val conversation = conversations[position]
         holder.bind(conversation)
-
 
         holder.itemView.setOnClickListener {
             conversation.conversationId?.let { id ->
