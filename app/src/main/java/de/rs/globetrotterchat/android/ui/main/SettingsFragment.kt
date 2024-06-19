@@ -30,7 +30,6 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,7 +45,15 @@ class SettingsFragment : Fragment() {
         viewModel.userProfile.observe(viewLifecycleOwner){userProfile ->
             userProfile?.let {
                 binding.etNickName.setText(it.nickname)
-                binding.spNativeLanguage.setText(it.nativeLanguage)
+                val languages = resources.getStringArray(R.array.native_language_options)
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, languages)
+                (binding.spNativeLanguage).apply {
+                    setAdapter(adapter)
+                    setOnItemClickListener { _, _, position, _ ->
+                        val selectedLanguageCode = languageCodes[position]
+                        binding.spNativeLanguage.setText(selectedLanguageCode)
+                    }
+                }
                 if(it.profilePictureUrl != null){
                     Glide.with(this)
                         .load(userProfile.profilePictureUrl)
@@ -63,17 +70,6 @@ class SettingsFragment : Fragment() {
                 pickImageLauncher.launch("image/*")
             }
 
-        }
-
-
-        val languages = resources.getStringArray(R.array.native_language_options)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, languages)
-        (binding.spNativeLanguage).apply {
-            setAdapter(adapter)
-            setOnItemClickListener { _, _, position, _ ->
-                val selectedLanguageCode = languageCodes[position]
-                // Hier kannst du den ausgewählten Sprachcode speichern oder verwenden
-            }
         }
 
         binding.btnSaveProfile.setOnClickListener{
