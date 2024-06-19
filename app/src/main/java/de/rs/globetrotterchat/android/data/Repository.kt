@@ -2,7 +2,6 @@ package de.rs.globetrotterchat.android.data
 
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.ListenerRegistration
@@ -51,20 +50,20 @@ class Repository(
     }
 
     /**
-     * Lädt ein Bild hoch und speichert die URL.
+     * Lädt ein Bild hoch und speichert die URL im Benutzerprofil.
      *
-     * Diese suspendierbare Funktion lädt zuerst ein Bild anhand der übergebenen `imageUri` hoch,
-     * indem sie den `firestoreStorageService` verwendet. Nach erfolgreichem Hochladen wird überprüft,
-     * ob ein Profil für den eingeloggten Benutzer vorhanden ist. Ist dies der Fall, wird die URL des Bildes
-     * im Profil gespeichert. Wenn kein Profil gefunden wird, wird eine Fehlermeldung geloggt.
+     * Diese suspendierte Funktion lädt zuerst das Bild über den gegebenen Uri hoch.
+     * Nach erfolgreichem Hochladen wird die Bild-URL im Profil des eingeloggten Benutzers gespeichert.
+     * Falls das Profil des Benutzers nicht gefunden wird, wird ein Fehler geloggt.
+     * Im Falle eines Fehlers beim Hochladen wird ebenfalls ein Fehler geloggt.
      *
-     * @param imageUri Die URI des Bildes, das hochgeladen werden soll.
-     * @throws Exception Wenn beim Hochladen des Bildes oder beim Speichern der URL ein Fehler auftritt,
-     *                   wird eine Ausnahme geworfen und geloggt.
+     * @param imageUri Der Uri des hochzuladenden Bildes.
+     * @throws Exception Falls ein Fehler beim Hochladen des Bildes auftritt.
      */
     suspend fun uploadImageAndSaveUrl(imageUri: Uri) {
         try {
             val imageUrl = firestoreStorageService.uploadImage(imageUri)
+            _userProfile.value?.profilePictureUrl = imageUrl
             val loggedInUserProfile = firestoreProfileService.getProfile() != null
             if (loggedInUserProfile) {
                 firestoreProfileService.saveImageUrl(imageUrl)
@@ -144,14 +143,15 @@ class Repository(
     }
 
     /**
-     * Lädt die Konversationen für den angemeldeten Benutzer und aktualisiert die Anzeigenamen.
+     * Lädt die Konversationen für den eingeloggten Benutzer.
      *
-     * Diese Funktion lädt zuerst alle Profile und dann alle Konversationen des angemeldeten Benutzers.
-     * Für jede Konversation wird der Anzeigename des anderen Teilnehmers ermittelt und die Konversation
-     * entsprechend aktualisiert. Die aktualisierten Konversationen werden dann in das LiveData-Objekt
-     * `_conversations` gepostet. Im Fehlerfall wird der Stacktrace ausgegeben.
+     * Diese suspendierte Funktion holt zuerst alle Benutzerprofile und lädt dann alle Konversationen.
+     * Für jede Konversation wird der Name und das Profilbild des anderen Teilnehmers aktualisiert.
+     * Falls kein Spitzname oder Profilbild vorhanden ist, werden Standardwerte verwendet.
+     * Die aktualisierte Liste wird dann an die UI übermittelt.
      *
-     * @param loggedInUid Die eindeutige Benutzer-ID des angemeldeten Benutzers.
+     * @param loggedInUid Die eindeutige Benutzer-ID des eingeloggten Benutzers.
+     * @throws Exception Falls ein Fehler beim Laden der Konversationen auftritt.
      */
     suspend fun loadConversationsForUser(loggedInUid: String) {
         try {

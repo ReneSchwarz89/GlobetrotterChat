@@ -36,7 +36,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setProfile(nickname: String, nativeLanguage: String){
         viewModelScope.launch {
-            val profile = Profile(uid = loggedInUid, nickname,nativeLanguage)
+            val profile = Profile(uid = loggedInUid, nickname, nativeLanguage, userProfile.value?.profilePictureUrl)
             repository.setProfile(profile)
         }
     }
@@ -84,13 +84,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Sendet eine Nachricht in einer Konversation.
      *
-     * Diese Funktion überprüft zuerst, ob die Muttersprache des Empfängers von der des Absenders abweicht.
-     * Ist dies der Fall, wird der Text des Absenders in die Zielsprache übersetzt. Ansonsten wird der
-     * Originaltext verwendet. Die Nachricht wird dann erstellt und zur Konversation hinzugefügt.
-     * Abschließend werden die Nachrichten der Konversation neu geladen.
+     * Diese Funktion sendet eine Nachricht von einem Sender an einen Empfänger innerhalb einer Konversation.
+     * Wenn die Muttersprache des Senders und die des Empfängers unterschiedlich sind, wird der Text übersetzt.
+     * Die übersetzte Nachricht wird dann zur Konversation hinzugefügt.
+     * Falls die Sprachen identisch sind, wird der Originaltext gesendet.
      *
-     * @param senderText Der Text, den der Absender senden möchte.
-     * @param conversationId Die ID der Konversation, in der die Nachricht gesendet werden soll.
+     * @param senderText Der Text der Nachricht, die gesendet werden soll.
+     * @param conversationId Die ID der Konversation, zu der die Nachricht hinzugefügt werden soll.
      */
     fun sendMessage(senderText: String, conversationId: String) {
         viewModelScope.launch {

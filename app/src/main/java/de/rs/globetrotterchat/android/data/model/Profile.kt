@@ -5,5 +5,5 @@ data class Profile(
     var uid: String? = null,
     val nickname: String? = null,
     var nativeLanguage: String? = null,
-    val profilePictureUrl: String? = null
+    var profilePictureUrl: String? = null
 )
