@@ -55,7 +55,7 @@ GlobetrotterChat ist eine Android-Anwendung, die es Benutzern ermöglicht, in ve
 - **Bibliotheken**: Retrofit, Moshi, Glide
 
 ## Mitwirkende
-- **René Schwarz** - ([GitHub-Profil](https://www.youtube.com/watch?v=fgdpvwEWJ9M))
+- **René Schwarz** - ([GitHub-Profil](https://github.com/ReneSchwarz89))
 
 ## Lizenz
 Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen findest du in der LICENSE Datei.
