@@ -5,9 +5,9 @@ GlobetrotterChat ist eine Android-Anwendung, die es Benutzern ermöglicht, in ve
 
 ## Installation
 ### Voraussetzungen
-- Android Studio installiert (Tutorial)
-- Google Cloud Platform Konto (Tutorial)
-- Firebase Projekt eingerichtet (Tutorial)
+- Android Studio installiert ([Tutorial](https://www.youtube.com/watch?v=gYEOxDPHsp4))
+- Google Cloud Platform Konto ([Tutorial](https://www.youtube.com/watch?v=Y4gb4Ce-I88))
+- Firebase Projekt eingerichtet ([Tutorial](https://www.youtube.com/watch?v=fgdpvwEWJ9M))
 
 ### Schritte
 1. **Repository klonen**:
