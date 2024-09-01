@@ -61,7 +61,8 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:focusableInTouchMode="false"
-                    android:inputType="none"/>
+                    android:inputType="none"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
