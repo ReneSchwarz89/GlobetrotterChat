@@ -22,12 +22,12 @@ GlobetrotterChat ist eine Android-Anwendung, die es Benutzern ermöglicht, in ve
     - Stelle sicher, dass alle Abhängigkeiten in der `build.gradle` Datei synchronisiert sind.
 
 4. **Google Cloud Translation API einrichten**:
-    - Erstelle ein Google Cloud Platform Konto (Tutorial).
+    - Erstelle ein Google Cloud Platform Konto ([Tutorial](https://www.youtube.com/watch?v=Y4gb4Ce-I88)).
     - Aktiviere die Google Cloud Translation API und erstelle einen API-Schlüssel.
     - Füge den API-Schlüssel in deiner `build.gradle` Datei oder in einer separaten Konfigurationsdatei hinzu.
 
 5. **Firebase einrichten**:
-    - Erstelle ein Firebase-Projekt (Tutorial).
+    - Erstelle ein Firebase-Projekt ([Tutorial](https://www.youtube.com/watch?v=fgdpvwEWJ9M)).
     - Füge deine Android-App zu Firebase hinzu und binde die `google-services.json` Datei in dein Projekt ein.
     - Aktiviere Firebase Auth, Firestore und Storage in der Firebase-Konsole.
 
@@ -55,7 +55,7 @@ GlobetrotterChat ist eine Android-Anwendung, die es Benutzern ermöglicht, in ve
 - **Bibliotheken**: Retrofit, Moshi, Glide
 
 ## Mitwirkende
-- **Dein Name** - GitHub-Profil
+- **René Schwarz** - ([GitHub-Profil](https://www.youtube.com/watch?v=fgdpvwEWJ9M))
 
 ## Lizenz
 Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen findest du in der LICENSE Datei.
